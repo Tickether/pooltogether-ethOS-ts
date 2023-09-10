@@ -48,10 +48,10 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="settings" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="deposit" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="withdraw" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false}} />
+        <Stack.Screen name="settings" options={{ presentation: 'modal', headerTitle:''}} />
+        <Stack.Screen name="deposit" options={{ presentation: 'modal', headerTitle:''}} />
+        <Stack.Screen name="withdraw" options={{ presentation: 'modal', headerTitle:''}} />
       </Stack>
     </ThemeProvider>
   );

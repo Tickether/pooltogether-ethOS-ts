@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
 
-import { Text, View } from './Themed';
+import { Text, View } from '../Themed';
 
-export default function VaultComponent() {
+export default function NextDraw() {
 
   // display two vaults with deposit button
   return (

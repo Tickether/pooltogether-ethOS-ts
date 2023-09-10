@@ -1,24 +1,13 @@
 import { StyleSheet } from 'react-native';
 
-import { Text, View } from '../../components/Themed';
+import { Text, View } from '../Themed';
 
-export default function PrizesScreen() {
-  //landing page for basic highlights and Call to action
+export default function VaultInfo() {
+
+  // display two vaults with deposit button
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      {/**
-       * learn
-       */}
-       {/**
-       * time to draw
-       */}
-       {/**
-       * price est
-       */}
-       {/**
-       * price pool winners
-       */}
+      <Text style={styles.title}>VaultComponent</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
     </View>
   );

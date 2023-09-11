@@ -1,14 +1,20 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 
 import { Text, View } from '../Themed';
+import { OptimismLogo } from '../../constants/Icons';
 
 export default function PoolEstimates() {
 
   // display two vaults with deposit button
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>VaultComponent</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <View style={styles.title}>
+        <OptimismLogo />
+        <Text>Optimism Prize Pool</Text>
+        <Text>🏆</Text>
+      </View>
+      <View style={styles.prizes}>
+      </View>
     </View>
   );
 }
@@ -20,12 +26,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    flexDirection: 'row',
+    gap: 3
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  prizes: {
+
   },
 });

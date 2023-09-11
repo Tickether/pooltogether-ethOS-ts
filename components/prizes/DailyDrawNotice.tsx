@@ -2,13 +2,12 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../Themed';
 
-export default function LearnInfo() {
+export default function DailyDrawNotice() {
 
   // display two vaults with deposit button
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>VaultComponent</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <Text style={styles.title}>Daily Draw Notice</Text>
     </View>
   );
 }

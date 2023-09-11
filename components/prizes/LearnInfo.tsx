@@ -1,14 +1,27 @@
 import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../Themed';
+import { FontAwesome } from '@expo/vector-icons';
 
-export default function VaultInfo() {
+export default function LearnInfo() {
 
-  // display two vaults with deposit button
+  // display two vaults with d1eposit button
+  // https://gov.pooltogether.com/t/v5-private-beta-launch-information/3021
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>VaultComponent</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <View style={styles.version}>
+        <Text>BETA</Text>
+      </View>
+      <View style={styles.title}>
+        <Text>Learn more on the gov forum</Text>
+      </View>
+      <View style={styles.icon}>
+        <FontAwesome
+          name="external-link"
+          size={16}
+          color='white'
+        />
+      </View>
     </View>
   );
 }
@@ -16,16 +29,18 @@ export default function VaultInfo() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
+    gap: 5,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifytitleContent: 'center',
+  },
+  version: {
+ 
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+   
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  icon: {
+    
   },
 });

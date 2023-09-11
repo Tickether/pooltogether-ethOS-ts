@@ -1,25 +1,23 @@
 import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
+import LearnInfo from '../../components/prizes/LearnInfo';
+import NextDraw from '../../components/prizes/NextDraw';
+import PoolEstimates from '../../components/prizes/PoolEstimates';
+import PoolWinners from '../../components/prizes/PoolWinners';
 
 export default function PrizesScreen() {
   //landing page for basic highlights and Call to action
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      {/**
-       * learn
-       */}
-       {/**
-       * time to draw
-       */}
-       {/**
-       * price est
-       */}
-       {/**
-       * price pool winners
-       */}
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      {/**learn*/}
+      <LearnInfo/>       
+      {/** time to draw*/}
+      <NextDraw/>
+      {/** price est*/}
+      <PoolEstimates/>
+      {/** price pool winners*/}
+      <PoolWinners/>
     </View>
   );
 }

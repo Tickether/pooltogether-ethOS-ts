@@ -1,4 +1,4 @@
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../Themed';
 import { OptimismLogo } from '../../constants/Icons';
@@ -30,6 +30,6 @@ const styles = StyleSheet.create({
     gap: 3
   },
   prizes: {
-
+    
   },
 });

@@ -1,14 +1,24 @@
 import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
+import LearnInfo from '../../components/vaults/LearnInfo';
+import LearnRisk from '../../components/vaults/LearnRisk';
+import VaultInfo from '../../components/vaults/VaultInfo';
 
 export default function VaultsScreen() {
 
   // display two vaults with deposit button
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      {/**Learn INfo */}
+      <LearnInfo/>
+      {/**Learn Risk */}
+      <LearnRisk/>
+      {/**Vault filter */}
+      
+      {/**Map Vault INfo */}
+      <VaultInfo name='Prize' address='0x0'/>
+
     </View>
   );
 }

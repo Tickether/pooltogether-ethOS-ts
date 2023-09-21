@@ -1,12 +1,18 @@
 import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
+import LearnInfo from '../../components/account/LearnInfo';
+import PoolDeposits from '../../components/account/PoolDeposits';
+import PoolWinnings from '../../components/account/PoolWinnings';
 
 export default function AccountScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Three</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <LearnInfo/>
+
+      <PoolDeposits/>
+
+      <PoolWinnings/>
     </View>
   );
 }

@@ -1,16 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet } from 'react-native';
 
 
 import { Text, View } from '../components/Themed';
+import WithdrawSwap from '../components/withdraw/WithdrawSwap';
+import WithdrawDex from '../components/withdraw/WithdrawDex';
+import WithdrawEstimate from '../components/withdraw/WithdrawEstimate';
 
 export default function WithdrawModal() {
   //edit setting to as seen a cabana.fi
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Withdraw</Text>
-    
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+      <View style={styles.title}>
+        <Text>Withdraw from {`Prize USDC`} on Optimism</Text>
+      </View>
+
+      <WithdrawDex/>
+      
+      <WithdrawEstimate/>
+      
+      <WithdrawSwap/>
     </View>
   );
 }
@@ -22,7 +30,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    
   }
 });

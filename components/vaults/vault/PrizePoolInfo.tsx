@@ -2,6 +2,8 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../../Themed';
 import { FontAwesome } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native';
+import { Link } from 'expo-router';
 
 export default function PrizePoolInfo() {
 
@@ -13,7 +15,14 @@ export default function PrizePoolInfo() {
 
         <View></View>
         
-        <View></View>    
+        <View style={styles.actions}>
+          <TouchableOpacity>
+            <Link href="/withdraw"><Text>Withdraw</Text></Link>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Link href="/deposit"><Text>Deposit</Text></Link>
+          </TouchableOpacity>
+        </View>  
     </View>
   );
 }
@@ -32,7 +41,7 @@ const styles = StyleSheet.create({
   title: {
    
   },
-  icon: {
+  actions: {
     
   },
 });

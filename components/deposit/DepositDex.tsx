@@ -4,10 +4,16 @@ import { Platform, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 
 import { Text, View, } from '../Themed';
 import { useState } from 'react';
+import { getAddress } from '../../utilities/utils/getAddress';
+import { getBalance } from '../../utilities/utils/getBalance';
 
 export default function DepositDex() {
   // currency conversion util
   const [amount, setAmount] = useState<string | null>(null);
+  
+  //const addy = getAddress()
+  //const bal = getBalance('0x0', addy)
+  
   return (
     <View style={styles.container}>
       <View style={styles.deposit}>
@@ -36,6 +42,7 @@ export default function DepositDex() {
             onChangeText={setAmount}
           />
           <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+          <Text></Text>
         </View>
         <View style={styles.balance}>
           <Text>{`PTUSDC`}</Text>

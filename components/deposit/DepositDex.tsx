@@ -1,18 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 
 
-import { Text, View } from '../Themed';
-import { TouchableOpacity } from 'react-native';
+import { Text, View, } from '../Themed';
+import { useState } from 'react';
 
 export default function DepositDex() {
-  //edit setting to as seen a cabana.fi
+  // currency conversion util
+  const [amount, setAmount] = useState<string | null>(null);
   return (
     <View style={styles.container}>
       <View style={styles.deposit}>
         <View style={styles.amount}>
-          <Text>1</Text>
-          <Text>1</Text>
+          <TextInput 
+            style={styles.input}
+            placeholder='0'
+            keyboardType="numeric"
+            value={amount!}
+            onChangeText={setAmount}
+          />
+          <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
         </View>
         <View style={styles.balance}>
           <Text>{`USDC`}</Text>
@@ -21,8 +28,14 @@ export default function DepositDex() {
       </View>
       <View style={styles.prize}>
         <View style={styles.amount}>
-          <Text>1</Text>
-          <Text>1</Text>
+          <TextInput 
+            style={styles.input}
+            placeholder='0'
+            keyboardType="numeric"
+            value={amount!}
+            onChangeText={setAmount}
+          />
+          <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
         </View>
         <View style={styles.balance}>
           <Text>{`PTUSDC`}</Text>
@@ -40,16 +53,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   deposit: {
-  
+    
+   flexDirection: 'row'
   },
   prize: {
-  
+    flexDirection: 'row'
   },
   amount: {
+    flexDirection: 'column',
+    backgroundColor: 'red',
+    justifyContent: 'flex-start'
   
-  }
-  ,
+  },
+  input: {
+    borderWidth: 1,
+  },
   balance: {
-  
+    flexDirection: 'column',
+    backgroundColor: 'blue',
+    justifyContent: 'flex-end'
   }
 });

@@ -3,17 +3,17 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View } from '../Themed';
 import { Link } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
+import { VaultProps } from '../../constants/Vaults';
 
 interface VaultInfoProps {
-  name: string,
-  symbol: string,
-  image: string
-  address: string,
+  vault: VaultProps,
 }
 
-export default function VaultInfo({name, symbol, image, address} : VaultInfoProps) {
+export default function VaultInfo({ vault } : VaultInfoProps) {
 
-  // display two vaults with deposit button
+  // display vault with deposit button
+  // calculate price power and balance : pref from utils fuction
+  
   return (
     <View style={styles.container}>
       
@@ -21,9 +21,8 @@ export default function VaultInfo({name, symbol, image, address} : VaultInfoProp
 
         <View style={styles.caption}>
           <Link href="/vault">
-            {image}
-            <Text>{name}</Text>
-            <Text>{symbol}</Text>
+            <Text>{vault.prizeName}</Text>
+            <Text>{vault.prizeSymbol}</Text>
           </Link>
         </View>
 
@@ -39,7 +38,7 @@ export default function VaultInfo({name, symbol, image, address} : VaultInfoProp
 
       <View style={styles.down}>
         <View style={styles.power}>
-          <View>
+          <View style={styles.left}>
             <Text>Prize Power</Text>
             <FontAwesome
               name="info-circle"
@@ -60,6 +59,7 @@ export default function VaultInfo({name, symbol, image, address} : VaultInfoProp
           </View>
         </View>
       </View>
+
     </View>
   );
 }
@@ -71,21 +71,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   top: {
-
+    flexDirection: 'row',
+    justifyContent: 'space-around'
   },
   caption: {
 
   },
   actions: {
-
+    flexDirection: 'row'
   },
   down: {
 
   },
   power: {
-
+    flexDirection: 'row'
+  },
+  left: {
+    flexDirection: 'row'
   },
   total: {
-
+    flexDirection: 'row'
   },
 });

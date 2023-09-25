@@ -1,17 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 
 
 import { Text, View } from '..//Themed';
+import { useState } from 'react';
+
 
 export default function WithdrawDex() {
-  //edit setting to as seen a cabana.fi
+  // currency conversion util
+  // balance of deposit
+  // balance of prize
+  const [amount, setAmount] = useState<number>(0);
   return (
     <View style={styles.container}>
       <View style={styles.prize}>
         <View style={styles.amount}>
-          <Text>1</Text>
-          <Text>1</Text>
+          <TextInput
+            style={styles.input}
+            placeholder='0'
+            keyboardType="numeric"
+          />
+          <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
         </View>
         <View style={styles.balance}>
           <Text>{`PTUSDC`}</Text>
@@ -20,8 +29,12 @@ export default function WithdrawDex() {
       </View>
       <View style={styles.withdraw}>
         <View style={styles.amount}>
-          <Text>1</Text>
-          <Text>1</Text>
+          <TextInput
+            style={styles.input}
+            placeholder='0'
+            keyboardType="numeric"
+          />
+          <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
         </View>
         <View style={styles.balance}>
           <Text>{`USDC`}</Text>
@@ -39,15 +52,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   prize: {
-  
+    flexDirection: 'row'
   },
   withdraw: {
-  
+    flexDirection: 'row'
   },
   amount: {
   
-  }
-  ,
+  },
+  input: {
+    borderWidth: 1,
+  },
   balance: {
   
   }

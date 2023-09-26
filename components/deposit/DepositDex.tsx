@@ -11,8 +11,8 @@ export default function DepositDex() {
   // currency conversion util
   const [amount, setAmount] = useState<string | null>(null);
   
-  //const addy = getAddress()
-  //const bal = getBalance('0x0', addy)
+  const addy = getAddress()
+  const bal = getBalance('0x31515cfc4550d9c83e2d86e8a352886d1364e2d9', String(addy))
   
   return (
     <View style={styles.container}>

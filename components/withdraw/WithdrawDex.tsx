@@ -3,14 +3,35 @@ import { Platform, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 
 
 import { Text, View } from '..//Themed';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { VaultProps } from '../../constants/Vaults';
+import { getBalance } from '../../utilities/utils/getBalance';
+import { getAddress } from '../../utilities/utils/getAddress';
 
+interface VaultInfoProps {
+  vault: VaultProps,
+}
 
-export default function WithdrawDex() {
+export default function WithdrawDex({ vault } : VaultInfoProps) {
   // currency conversion util
   // balance of deposit
   // balance of prize
   const [amount, setAmount] = useState<number>(0);
+  const [assetBalanace, setAssetBalance] = useState<string>('0')
+  const [prizeBalanace, setPrizeBalance] = useState<string>('0')
+  
+
+  useEffect(()=>{
+    const getBalances = async () => {
+      const AssetBalance = await getBalance(vault.depositAsset, (getAddress()), vault.decimals)
+      setAssetBalance(AssetBalance)
+      const PrizeBalance = await getBalance(vault.prizeAsset, (getAddress()), vault.decimals)
+      setPrizeBalance((PrizeBalance))
+    }
+    getBalances()
+  })
+
+
   return (
     <View style={styles.container}>
       <View style={styles.prize}>
@@ -23,8 +44,8 @@ export default function WithdrawDex() {
           <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
         </View>
         <View style={styles.balance}>
-          <Text>{`PTUSDC`}</Text>
-          <Text>Balance: {`0`}<TouchableOpacity><Text>Max</Text></TouchableOpacity></Text>
+          <Text>{vault.prizeSymbol}</Text>
+          <Text>Balance: {prizeBalanace}<TouchableOpacity><Text>Max</Text></TouchableOpacity></Text>
         </View>
       </View>
       <View style={styles.withdraw}>
@@ -37,8 +58,8 @@ export default function WithdrawDex() {
           <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
         </View>
         <View style={styles.balance}>
-          <Text>{`USDC`}</Text>
-          <Text>Balance: {`0`}</Text>
+          <Text>{vault.depositSymbol}</Text>
+          <Text>Balance: {assetBalanace}</Text>
         </View>
       </View>
     </View>

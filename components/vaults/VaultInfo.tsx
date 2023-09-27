@@ -28,10 +28,10 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
 
         <View style={styles.actions}>
           <TouchableOpacity>
-            <Link href="/withdraw"><Text>Withdraw</Text></Link>
+            <Link href={{pathname: "/withdraw", params: { vault: JSON.stringify(vault)}}}><Text>Withdraw</Text></Link>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Link href="/deposit"><Text>Deposit</Text></Link>
+            <Link href={{pathname: "/deposit", params: { vault: JSON.stringify(vault)}}}><Text>Deposit</Text></Link>
           </TouchableOpacity>
         </View>
       </View>

@@ -3,16 +3,39 @@ import { Platform, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 
 
 import { Text, View, } from '../Themed';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getAddress } from '../../utilities/utils/getAddress';
 import { getBalance } from '../../utilities/utils/getBalance';
+import { VaultProps } from '../../constants/Vaults';
 
-export default function DepositDex() {
+
+interface VaultInfoProps {
+  vault: VaultProps,
+}
+
+
+export default function DepositDex({ vault } : VaultInfoProps) {
   // currency conversion util
   const [amount, setAmount] = useState<string | null>(null);
+  const [assetBalanace, setAssetBalance] = useState<string>('0')
+  const [prizeBalanace, setPrizeBalance] = useState<string>('0')
   
-  const addy = getAddress()
-  const bal = getBalance('0x31515cfc4550d9c83e2d86e8a352886d1364e2d9', String(addy))
+ useEffect(()=>{
+  const getBalances = async () => {
+    const AssetBalance = await getBalance(vault.depositAsset, (getAddress()), vault.decimals)
+    setAssetBalance(AssetBalance)
+    const PrizeBalance = await getBalance(vault.prizeAsset, (getAddress()), vault.decimals)
+    setPrizeBalance((PrizeBalance))
+  }
+  getBalances()
+ })
+
+ const MaxBid = () => {
+  setAmount(assetBalanace)
+ }
+  
+ 
+
   
   return (
     <View style={styles.container}>
@@ -28,8 +51,8 @@ export default function DepositDex() {
           <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
         </View>
         <View style={styles.balance}>
-          <Text>{`USDC`}</Text>
-          <Text>Balance: {`0`}<TouchableOpacity><Text>Max</Text></TouchableOpacity></Text>
+          <Text>{vault.depositSymbol}</Text>
+          <Text>Balance: {assetBalanace}<TouchableOpacity><Text>Max</Text></TouchableOpacity></Text>
         </View>
       </View>
       <View style={styles.prize}>
@@ -42,11 +65,10 @@ export default function DepositDex() {
             onChangeText={setAmount}
           />
           <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
-          <Text>{}</Text>
         </View>
         <View style={styles.balance}>
-          <Text>{`PTUSDC`}</Text>
-          <Text>Balance: {`0`}</Text>
+          <Text>{vault.prizeSymbol}</Text>
+          <Text>Balance: {prizeBalanace}</Text>
         </View>
       </View>
     </View>

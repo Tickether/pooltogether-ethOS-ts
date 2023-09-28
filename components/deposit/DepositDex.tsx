@@ -4,7 +4,6 @@ import { Platform, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 
 import { Text, View, } from '../Themed';
 import { useEffect, useState } from 'react';
-import { getAddress } from '../../utilities/utils/getAddress';
 import { getBalance } from '../../utilities/utils/getBalance';
 import { VaultProps } from '../../constants/Vaults';
 
@@ -22,9 +21,9 @@ export default function DepositDex({ vault } : VaultInfoProps) {
   
  useEffect(()=>{
   const getBalances = async () => {
-    const AssetBalance = await getBalance(vault.depositAsset, (getAddress()), vault.decimals)
+    const AssetBalance = await getBalance(vault.depositAsset, vault.decimals)
     setAssetBalance(AssetBalance)
-    const PrizeBalance = await getBalance(vault.prizeAsset, (getAddress()), vault.decimals)
+    const PrizeBalance = await getBalance(vault.prizeAsset, vault.decimals)
     setPrizeBalance((PrizeBalance))
   }
   getBalances()

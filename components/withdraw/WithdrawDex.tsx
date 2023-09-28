@@ -6,7 +6,6 @@ import { Text, View } from '..//Themed';
 import { useEffect, useState } from 'react';
 import { VaultProps } from '../../constants/Vaults';
 import { getBalance } from '../../utilities/utils/getBalance';
-import { getAddress } from '../../utilities/utils/getAddress';
 
 interface VaultInfoProps {
   vault: VaultProps,
@@ -23,9 +22,9 @@ export default function WithdrawDex({ vault } : VaultInfoProps) {
 
   useEffect(()=>{
     const getBalances = async () => {
-      const AssetBalance = await getBalance(vault.depositAsset, (getAddress()), vault.decimals)
+      const AssetBalance = await getBalance(vault.depositAsset, vault.decimals)
       setAssetBalance(AssetBalance)
-      const PrizeBalance = await getBalance(vault.prizeAsset, (getAddress()), vault.decimals)
+      const PrizeBalance = await getBalance(vault.prizeAsset, vault.decimals)
       setPrizeBalance((PrizeBalance))
     }
     getBalances()

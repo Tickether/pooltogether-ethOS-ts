@@ -6,4 +6,18 @@ export const erc20ABI = [
         stateMutability: 'view',
         type: 'function',
     },
+    {
+        inputs: [{ name: "owner", type: "address" }, { name: "spender", type: "address" }],
+        name: 'allowance',
+        outputs: [],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [{ name: "spender", type: "address" }, { name: "value", type: "uint256" }],
+        name: 'approve',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
 ] as const;

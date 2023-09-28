@@ -14,7 +14,7 @@ export const poolABI = [
         type: 'function',
     },
     {
-        inputs: [{ name: "_shares", type: "uint256" }, { name: "_receiver", type: "address" }],
+        inputs: [{ name: "_assets", type: "uint256" }, { name: "_receiver", type: "address" }],
         name: 'deposit',
         outputs: [],
         stateMutability: 'nonpayable',

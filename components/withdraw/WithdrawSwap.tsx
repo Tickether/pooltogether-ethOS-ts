@@ -3,8 +3,15 @@ import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
 
 
 import { Text, View } from '../Themed';
+import { VaultProps } from '../../constants/Vaults';
+import { leavePool } from '../../utilities/utils/leavePool';
 
-export default function WithdrawSwap() {
+interface WithdrawSwapProps {
+  vault: VaultProps,
+  amount: string;
+}
+
+export default function WithdrawSwap({ vault, amount } : WithdrawSwapProps) {
   //edit setting to as seen a cabana.fi
   return (
     <View style={styles.container}>
@@ -19,7 +26,9 @@ export default function WithdrawSwap() {
           </TouchableOpacity>
         </View>
         <View style={styles.withdraw}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={()=>{ leavePool(vault.prizeAsset, amount, vault.decimals)}}
+          >
             <Text>Withdraw</Text>
           </TouchableOpacity>
         </View>

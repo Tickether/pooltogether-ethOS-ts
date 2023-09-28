@@ -8,6 +8,8 @@ import DepositEstimate from '../components/deposit/DepositEstimate';
 import { VaultProps } from '../constants/Vaults';
 import { useLocalSearchParams } from 'expo-router';
 
+import { useEffect, useState } from 'react';
+
 interface DepositProps {
 
 }
@@ -21,14 +23,16 @@ export default function DepositModal() {
   const params = useLocalSearchParams();
   const { vault } = params;
 
+  const [amount, setAmount] = useState('0')
+
   return (
     <View style={styles.container}>
       <View style={styles.title}>
         <Text>Deposit to {`Prize USDC`} on Optimism</Text>
       </View>
-      <DepositDex vault={JSON.parse(vault.toLocaleString())}/>
+      <DepositDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} />
       <DepositEstimate/>
-      <DepositSwap/>
+      <DepositSwap vault={JSON.parse(vault.toLocaleString())} amount={amount}/>
     </View>
   );
 }

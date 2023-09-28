@@ -7,15 +7,17 @@ import { useEffect, useState } from 'react';
 import { VaultProps } from '../../constants/Vaults';
 import { getBalance } from '../../utilities/utils/getBalance';
 
-interface VaultInfoProps {
+interface WithdrawDexProps {
   vault: VaultProps,
+  amount: string; // 'amount' prop
+  setAmount: (amount: string) => void; // 'setAmount' prop
 }
 
-export default function WithdrawDex({ vault } : VaultInfoProps) {
+export default function WithdrawDex({ vault, amount, setAmount } : WithdrawDexProps) {
   // currency conversion util
   // balance of deposit
   // balance of prize
-  const [amount, setAmount] = useState<number>(0);
+  //const [amount, setAmount] = useState<string>('0');
   const [assetBalanace, setAssetBalance] = useState<string>('0')
   const [prizeBalanace, setPrizeBalance] = useState<string>('0')
   
@@ -39,6 +41,8 @@ export default function WithdrawDex({ vault } : VaultInfoProps) {
             style={styles.input}
             placeholder='0'
             keyboardType="numeric"
+            value={amount!}
+            onChangeText={setAmount}
           />
           <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
         </View>
@@ -53,6 +57,8 @@ export default function WithdrawDex({ vault } : VaultInfoProps) {
             style={styles.input}
             placeholder='0'
             keyboardType="numeric"
+            value={amount!}
+            onChangeText={setAmount}
           />
           <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
         </View>

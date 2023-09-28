@@ -8,14 +8,16 @@ import { getBalance } from '../../utilities/utils/getBalance';
 import { VaultProps } from '../../constants/Vaults';
 
 
-interface VaultInfoProps {
+interface DepositDexProps {
   vault: VaultProps,
+  amount: string; // 'amount' prop
+  setAmount: (amount: string) => void; // 'setAmount' prop
 }
 
 
-export default function DepositDex({ vault } : VaultInfoProps) {
+export default function DepositDex({ vault, amount, setAmount } : DepositDexProps) {
   // currency conversion util
-  const [amount, setAmount] = useState<string | null>(null);
+  //const [amount, setAmount] = useState<string | null>(null);
   const [assetBalanace, setAssetBalance] = useState<string>('0')
   const [prizeBalanace, setPrizeBalance] = useState<string>('0')
   

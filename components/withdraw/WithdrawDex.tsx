@@ -6,6 +6,7 @@ import { Text, View } from '..//Themed';
 import { useEffect, useState } from 'react';
 import { VaultProps } from '../../constants/Vaults';
 import { getBalance } from '../../utilities/utils/getBalance';
+import { checkBalance } from '../../utilities/utils/checkBalance';
 
 interface WithdrawDexProps {
   vault: VaultProps,
@@ -21,6 +22,8 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed } : Wit
   //const [amount, setAmount] = useState<string>('0');
   const [assetBalanace, setAssetBalance] = useState<string>('0')
   const [prizeBalanace, setPrizeBalance] = useState<string>('0')
+  const [balanceMessage, setBalanceMessage] =useState<string| null>(null)
+  
   
 
   useEffect(()=>{
@@ -32,6 +35,14 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed } : Wit
     }
     getBalances()
   })
+
+  useEffect(()=>{
+    const balanceCheck = async() => {
+      const balancedMessage = await checkBalance(vault.prizeAsset, vault.prizeSymbol, vault.decimals, amount)
+      setBalanceMessage(balancedMessage!)
+    }
+    balanceCheck()
+   },[amount])
 
 
   return (
@@ -50,10 +61,20 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed } : Wit
                   onChangeText={setAmount}
                 />
                 <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                {
+                  balanceMessage! && (
+                    <Text>{balanceMessage}</Text>
+                  )
+                }
               </View>
               <View style={styles.balance}>
                 <Text>{vault.prizeSymbol}</Text>
                 <Text>Balance: {prizeBalanace}<TouchableOpacity><Text>Max</Text></TouchableOpacity></Text>
+                {
+                  balanceMessage! && (
+                    <Text></Text>
+                  )
+                }
               </View>
             </View>
             <View style={styles.withdraw}>

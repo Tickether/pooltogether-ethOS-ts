@@ -6,6 +6,7 @@ import { Text, View, } from '../Themed';
 import { useEffect, useState } from 'react';
 import { getBalance } from '../../utilities/utils/getBalance';
 import { VaultProps } from '../../constants/Vaults';
+import { checkBalance } from '../../utilities/utils/checkBalance';
 
 
 interface DepositDexProps {
@@ -21,6 +22,7 @@ export default function DepositDex({ vault, amount, setAmount, reviewed } : Depo
   //const [amount, setAmount] = useState<string | null>(null);
   const [assetBalanace, setAssetBalance] = useState<string>('0')
   const [prizeBalanace, setPrizeBalance] = useState<string>('0')
+  const [balanceMessage, setBalanceMessage] =useState<string| null>(null)
   
  useEffect(()=>{
   const getBalances = async () => {
@@ -31,6 +33,15 @@ export default function DepositDex({ vault, amount, setAmount, reviewed } : Depo
   }
   getBalances()
  })
+
+ useEffect(()=>{
+  const balanceCheck = async() => {
+    const balancedMessage = await checkBalance(vault.depositAsset, vault.depositSymbol, vault.decimals, amount)
+    setBalanceMessage(balancedMessage!)
+  }
+  balanceCheck()
+ },[amount])
+ 
 
  const MaxBid = () => {
   setAmount(assetBalanace)
@@ -55,10 +66,20 @@ export default function DepositDex({ vault, amount, setAmount, reviewed } : Depo
                   onChangeText={setAmount}
                 />
                 <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                {
+                  balanceMessage! && (
+                    <Text>{balanceMessage}</Text>
+                  )
+                }
               </View>
               <View style={styles.balance}>
                 <Text>{vault.depositSymbol}</Text>
                 <Text>Balance: {assetBalanace}<TouchableOpacity><Text>Max</Text></TouchableOpacity></Text>
+                {
+                  balanceMessage! && (
+                    <Text></Text>
+                  )
+                }
               </View>
             </View>
             <View style={styles.prize}>

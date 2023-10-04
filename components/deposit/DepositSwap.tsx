@@ -13,7 +13,7 @@ interface DepositSwapProps {
   vault: VaultProps,
   amount: string
   reviewed: boolean | null // 'reviewed' prop
-  setReview: (reviewed: boolean | null) => void; // 'setReview' prop
+  setReview: (reviewed: boolean | null) => void // 'setReview' prop
 }
 
 export default function DepositSwap({ vault, amount, reviewed, setReview } : DepositSwapProps) {

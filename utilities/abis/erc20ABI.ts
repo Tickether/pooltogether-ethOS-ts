@@ -9,7 +9,7 @@ export const erc20ABI = [
     {
         inputs: [{ name: "owner", type: "address" }, { name: "spender", type: "address" }],
         name: 'allowance',
-        outputs: [],
+        outputs: [{ name: "", type: "uint256" }],
         stateMutability: 'view',
         type: 'function',
     },

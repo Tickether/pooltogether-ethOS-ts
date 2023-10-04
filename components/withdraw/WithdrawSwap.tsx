@@ -5,6 +5,7 @@ import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View } from '../Themed';
 import { VaultProps } from '../../constants/Vaults';
 import { leavePool } from '../../utilities/utils/leavePool';
+import { useState } from 'react';
 
 interface WithdrawSwapProps {
   vault: VaultProps,
@@ -13,25 +14,45 @@ interface WithdrawSwapProps {
 
 export default function WithdrawSwap({ vault, amount } : WithdrawSwapProps) {
   //edit setting to as seen a cabana.fi
+  const [reviewed, setReview] = useState<boolean>(false)
+  //const [swimmable, setSwimmable] = useState<boolean>(false)
+
   return (
     <View style={styles.container}>
-        <View style={styles.enter}>
-          <Text>
-            Enter an amount
-          </Text>
-        </View>
-        <View style={styles.review}>
-          <TouchableOpacity>
-            <Text>Review Withdraw</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.withdraw}>
-          <TouchableOpacity
-            onPress={()=>{ leavePool(vault.prizeAsset, amount, vault.decimals)}}
-          >
-            <Text>Withdraw</Text>
-          </TouchableOpacity>
-        </View>
+      {
+        amount == '0' || amount == ''  
+        ?(
+          <View>
+            <View style={styles.enter}>
+              <Text>
+                Enter an amount
+              </Text>
+            </View>
+          </View>
+        ) 
+        :(
+          <View>
+            {!reviewed && (
+              <View style={styles.review}>
+                <TouchableOpacity
+                  onPress={()=> setReview(true)}
+                >
+                  <Text>Review Withdraw</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+            {reviewed && (
+              <View style={styles.withdraw}>
+                <TouchableOpacity
+                  onPress={()=>{ leavePool(vault.prizeAsset, amount, vault.decimals)}}
+                >
+                  <Text>Withdraw</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+        )
+      }
     </View>
   );
 }

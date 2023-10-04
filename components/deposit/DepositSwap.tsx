@@ -11,19 +11,24 @@ import { checkSwimmable } from '../../utilities/utils/checkSwimmable';
 
 interface DepositSwapProps {
   vault: VaultProps,
-  amount: string;
+  amount: string
+  reviewed: boolean | null // 'reviewed' prop
+  setReview: (reviewed: boolean | null) => void; // 'setReview' prop
 }
 
-export default function DepositSwap({ vault, amount } : DepositSwapProps) {
+export default function DepositSwap({ vault, amount, reviewed, setReview } : DepositSwapProps) {
   //edit setting to as seen a cabana.fi
-  const [reviewed, setReview] = useState<boolean>(false)
+  //const [reviewed, setReview] = useState<boolean | null>(null)
   const [swimmable, setSwimmable] = useState<boolean>(false)
 
 
 
   useEffect(()=>{
+    
     const checkSwimming = async () => {
+      setReview(null)
       const canSwim = await checkSwimmable(vault.prizeAsset, vault.decimals, amount)
+      if(canSwim){setReview(false)}
       setSwimmable(canSwim)
     } 
     checkSwimming()
@@ -64,31 +69,26 @@ export default function DepositSwap({ vault, amount } : DepositSwapProps) {
               ) 
               :(
                 <View>
-                  {
-                    !reviewed 
-                    ?(
-                      <View>
-                        <View style={styles.review}>
-                          <TouchableOpacity
-                            onPress={()=> setReview(true)}
-                          >
-                            <Text>Review Deposit</Text>
-                          </TouchableOpacity>
-                        </View>
-                      </View> 
-                    )
-                    :(
-                      <View>
-                        <View style={styles.deposit}>
-                          <TouchableOpacity
-                            onPress={()=>{ goSwimming(vault.prizeAsset, amount, vault.decimals)}}
-                          >
-                            <Text>Deposit</Text>
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    )
-                  }
+                  
+                  {reviewed == false && (
+                    <View style={styles.review}>
+                      <TouchableOpacity
+                        onPress={()=> setReview(true)}
+                      >
+                        <Text>Review Deposit</Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                  {reviewed && (
+                    <View style={styles.deposit}>
+                      <TouchableOpacity
+                        onPress={()=>{ goSwimming(vault.prizeAsset, amount, vault.decimals)}}
+                      >
+                        <Text>Deposit</Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                  
                 </View>
               )
             }

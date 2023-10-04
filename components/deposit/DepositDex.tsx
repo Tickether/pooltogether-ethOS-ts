@@ -9,13 +9,14 @@ import { VaultProps } from '../../constants/Vaults';
 
 
 interface DepositDexProps {
-  vault: VaultProps,
-  amount: string; // 'amount' prop
-  setAmount: (amount: string) => void; // 'setAmount' prop
+  vault: VaultProps
+  amount: string // 'amount' prop
+  setAmount: (amount: string) => void // 'setAmount' prop
+  reviewed: boolean | null
 }
 
 
-export default function DepositDex({ vault, amount, setAmount } : DepositDexProps) {
+export default function DepositDex({ vault, amount, setAmount, reviewed } : DepositDexProps) {
   // currency conversion util
   //const [amount, setAmount] = useState<string | null>(null);
   const [assetBalanace, setAssetBalance] = useState<string>('0')
@@ -40,38 +41,65 @@ export default function DepositDex({ vault, amount, setAmount } : DepositDexProp
   
   return (
     <View style={styles.container}>
-      <View style={styles.deposit}>
-        <View style={styles.amount}>
-          <TextInput 
-            style={styles.input}
-            placeholder='0'
-            keyboardType="numeric"
-            value={amount!}
-            onChangeText={setAmount}
-          />
-          <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
-        </View>
-        <View style={styles.balance}>
-          <Text>{vault.depositSymbol}</Text>
-          <Text>Balance: {assetBalanace}<TouchableOpacity><Text>Max</Text></TouchableOpacity></Text>
-        </View>
-      </View>
-      <View style={styles.prize}>
-        <View style={styles.amount}>
-          <TextInput 
-            style={styles.input}
-            placeholder='0'
-            keyboardType="numeric"
-            value={amount!}
-            onChangeText={setAmount}
-          />
-          <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
-        </View>
-        <View style={styles.balance}>
-          <Text>{vault.prizeSymbol}</Text>
-          <Text>Balance: {prizeBalanace}</Text>
-        </View>
-      </View>
+      {
+        !reviewed 
+        ?(
+          <View>
+            <View style={styles.deposit}>
+              <View style={styles.amount}>
+                <TextInput 
+                  style={styles.input}
+                  placeholder='0'
+                  keyboardType="numeric"
+                  value={amount!}
+                  onChangeText={setAmount}
+                />
+                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+              </View>
+              <View style={styles.balance}>
+                <Text>{vault.depositSymbol}</Text>
+                <Text>Balance: {assetBalanace}<TouchableOpacity><Text>Max</Text></TouchableOpacity></Text>
+              </View>
+            </View>
+            <View style={styles.prize}>
+              <View style={styles.amount}>
+                <TextInput 
+                  style={styles.input}
+                  placeholder='0'
+                  keyboardType="numeric"
+                  value={amount!}
+                  onChangeText={setAmount}
+                />
+                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+              </View>
+              <View style={styles.balance}>
+                <Text>{vault.prizeSymbol}</Text>
+                <Text>Balance: {prizeBalanace}</Text>
+              </View>
+            </View>
+          </View>
+        ) 
+        :(
+          <View>
+            <View style={styles.deposit}>
+              <View style={styles.amount}>
+                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+              </View>
+              <View style={styles.balance}>
+                <Text>{vault.depositSymbol}</Text>
+              </View>
+            </View>
+            <View style={styles.prize}>
+              <View style={styles.amount}>
+                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+              </View>
+              <View style={styles.balance}>
+                <Text>{vault.prizeSymbol}</Text>
+              </View>
+            </View>
+          </View>
+        )
+      }
     </View>
   );
 }

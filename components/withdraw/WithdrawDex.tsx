@@ -11,9 +11,10 @@ interface WithdrawDexProps {
   vault: VaultProps,
   amount: string; // 'amount' prop
   setAmount: (amount: string) => void; // 'setAmount' prop
+  reviewed: boolean | null
 }
 
-export default function WithdrawDex({ vault, amount, setAmount } : WithdrawDexProps) {
+export default function WithdrawDex({ vault, amount, setAmount, reviewed } : WithdrawDexProps) {
   // currency conversion util
   // balance of deposit
   // balance of prize
@@ -35,38 +36,65 @@ export default function WithdrawDex({ vault, amount, setAmount } : WithdrawDexPr
 
   return (
     <View style={styles.container}>
-      <View style={styles.prize}>
-        <View style={styles.amount}>
-          <TextInput
-            style={styles.input}
-            placeholder='0'
-            keyboardType="numeric"
-            value={amount!}
-            onChangeText={setAmount}
-          />
-          <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
-        </View>
-        <View style={styles.balance}>
-          <Text>{vault.prizeSymbol}</Text>
-          <Text>Balance: {prizeBalanace}<TouchableOpacity><Text>Max</Text></TouchableOpacity></Text>
-        </View>
-      </View>
-      <View style={styles.withdraw}>
-        <View style={styles.amount}>
-          <TextInput
-            style={styles.input}
-            placeholder='0'
-            keyboardType="numeric"
-            value={amount!}
-            onChangeText={setAmount}
-          />
-          <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
-        </View>
-        <View style={styles.balance}>
-          <Text>{vault.depositSymbol}</Text>
-          <Text>Balance: {assetBalanace}</Text>
-        </View>
-      </View>
+      {
+        !reviewed 
+        ?(
+          <View>
+            <View style={styles.prize}>
+              <View style={styles.amount}>
+                <TextInput
+                  style={styles.input}
+                  placeholder='0'
+                  keyboardType="numeric"
+                  value={amount!}
+                  onChangeText={setAmount}
+                />
+                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+              </View>
+              <View style={styles.balance}>
+                <Text>{vault.prizeSymbol}</Text>
+                <Text>Balance: {prizeBalanace}<TouchableOpacity><Text>Max</Text></TouchableOpacity></Text>
+              </View>
+            </View>
+            <View style={styles.withdraw}>
+              <View style={styles.amount}>
+                <TextInput
+                  style={styles.input}
+                  placeholder='0'
+                  keyboardType="numeric"
+                  value={amount!}
+                  onChangeText={setAmount}
+                />
+                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+              </View>
+              <View style={styles.balance}>
+                <Text>{vault.depositSymbol}</Text>
+                <Text>Balance: {assetBalanace}</Text>
+              </View>
+            </View>
+          </View>
+        ) 
+        :(
+          <View>
+            <View style={styles.prize}>
+              <View style={styles.amount}>
+                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+              </View>
+              <View style={styles.balance}>
+                <Text>{vault.prizeSymbol}</Text>
+              </View>
+            </View>
+            <View style={styles.withdraw}>
+              <View style={styles.amount}>
+                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+              </View>
+              <View style={styles.balance}>
+                <Text>{vault.depositSymbol}</Text>
+              </View>
+            </View>
+          </View>
+        )
+      }
     </View>
   );
 }

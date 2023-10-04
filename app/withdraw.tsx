@@ -16,6 +16,7 @@ export default function WithdrawModal() {
   const { vault } = params;
 
   const [amount, setAmount] = useState('0')
+  const [reviewed, setReview] = useState<boolean | null>(null)
 
 
   return (
@@ -24,11 +25,11 @@ export default function WithdrawModal() {
         <Text>Withdraw from {`Prize USDC`} on Optimism</Text>
       </View>
 
-      <WithdrawDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} />
+      <WithdrawDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} reviewed={reviewed}  />
       
       <WithdrawEstimate/>
       
-      <WithdrawSwap vault={JSON.parse(vault.toLocaleString())} amount={amount}/>
+      <WithdrawSwap vault={JSON.parse(vault.toLocaleString())} amount={amount} reviewed={reviewed} setReview={setReview} />
     </View>
   );
 }

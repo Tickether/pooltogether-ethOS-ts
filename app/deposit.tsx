@@ -24,15 +24,16 @@ export default function DepositModal() {
   const { vault } = params;
 
   const [amount, setAmount] = useState('0')
+  const [reviewed, setReview] = useState<boolean | null>(null)
 
   return (
     <View style={styles.container}>
       <View style={styles.title}>
         <Text>Deposit to {`Prize USDC`} on Optimism</Text>
       </View>
-      <DepositDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} />
+      <DepositDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} reviewed={reviewed} />
       <DepositEstimate/>
-      <DepositSwap vault={JSON.parse(vault.toLocaleString())} amount={amount}/>
+      <DepositSwap vault={JSON.parse(vault.toLocaleString())} amount={amount} reviewed={reviewed} setReview={setReview}/>
     </View>
   );
 }

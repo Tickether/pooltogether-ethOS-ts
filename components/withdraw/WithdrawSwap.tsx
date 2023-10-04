@@ -10,11 +10,13 @@ import { useState } from 'react';
 interface WithdrawSwapProps {
   vault: VaultProps,
   amount: string;
+  reviewed: boolean | null // 'reviewed' prop
+  setReview: (reviewed: boolean | null) => void // 'setReview' prop
 }
 
-export default function WithdrawSwap({ vault, amount } : WithdrawSwapProps) {
+export default function WithdrawSwap({ vault, amount, reviewed, setReview } : WithdrawSwapProps) {
   //edit setting to as seen a cabana.fi
-  const [reviewed, setReview] = useState<boolean>(false)
+  //const [reviewed, setReview] = useState<boolean>(false)
   //const [swimmable, setSwimmable] = useState<boolean>(false)
 
   return (

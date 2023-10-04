@@ -14,15 +14,17 @@ interface DepositDexProps {
   amount: string // 'amount' prop
   setAmount: (amount: string) => void // 'setAmount' prop
   reviewed: boolean | null
+  balanceMessage: string | null // 'balanceMessage' prop
+  setBalanceMessage: (balanceMessage: string | null) => void // 'setBalanceMessage' prop
 }
 
 
-export default function DepositDex({ vault, amount, setAmount, reviewed } : DepositDexProps) {
+export default function DepositDex({ vault, amount, setAmount, reviewed, balanceMessage, setBalanceMessage } : DepositDexProps) {
   // currency conversion util
   //const [amount, setAmount] = useState<string | null>(null);
   const [assetBalanace, setAssetBalance] = useState<string>('0')
   const [prizeBalanace, setPrizeBalance] = useState<string>('0')
-  const [balanceMessage, setBalanceMessage] =useState<string| null>(null)
+  //const [balanceMessage, setBalanceMessage] =useState<string| null>(null)
   
  useEffect(()=>{
   const getBalances = async () => {
@@ -34,13 +36,7 @@ export default function DepositDex({ vault, amount, setAmount, reviewed } : Depo
   getBalances()
  })
 
- useEffect(()=>{
-  const balanceCheck = async() => {
-    const balancedMessage = await checkBalance(vault.depositAsset, vault.depositSymbol, vault.decimals, amount)
-    setBalanceMessage(balancedMessage!)
-  }
-  balanceCheck()
- },[amount])
+ 
  
 
  const MaxBid = () => {

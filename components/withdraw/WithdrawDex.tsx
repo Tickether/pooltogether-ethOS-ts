@@ -13,16 +13,19 @@ interface WithdrawDexProps {
   amount: string; // 'amount' prop
   setAmount: (amount: string) => void; // 'setAmount' prop
   reviewed: boolean | null
+  balanceMessage: string | null// 'balanceMessage' prop
+  setBalanceMessage: (balanceMessage: string | null) => void // 'setBalanceMessage' prop
+
 }
 
-export default function WithdrawDex({ vault, amount, setAmount, reviewed } : WithdrawDexProps) {
+export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanceMessage, setBalanceMessage } : WithdrawDexProps) {
   // currency conversion util
   // balance of deposit
   // balance of prize
   //const [amount, setAmount] = useState<string>('0');
   const [assetBalanace, setAssetBalance] = useState<string>('0')
   const [prizeBalanace, setPrizeBalance] = useState<string>('0')
-  const [balanceMessage, setBalanceMessage] =useState<string| null>(null)
+  //const [balanceMessage, setBalanceMessage] =useState<string| null>(null)
   
   
 
@@ -36,13 +39,7 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed } : Wit
     getBalances()
   })
 
-  useEffect(()=>{
-    const balanceCheck = async() => {
-      const balancedMessage = await checkBalance(vault.prizeAsset, vault.prizeSymbol, vault.decimals, amount)
-      setBalanceMessage(balancedMessage!)
-    }
-    balanceCheck()
-   },[amount])
+  
 
 
   return (

@@ -14,9 +14,10 @@ interface DepositSwapProps {
   amount: string
   reviewed: boolean | null // 'reviewed' prop
   setReview: (reviewed: boolean | null) => void // 'setReview' prop
+  balanceMessage: string | null
 }
 
-export default function DepositSwap({ vault, amount, reviewed, setReview } : DepositSwapProps) {
+export default function DepositSwap({ vault, amount, reviewed, setReview, balanceMessage } : DepositSwapProps) {
   //edit setting to as seen a cabana.fi
   //const [reviewed, setReview] = useState<boolean | null>(null)
   const [swimmable, setSwimmable] = useState<boolean>(false)

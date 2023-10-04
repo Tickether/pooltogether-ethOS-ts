@@ -9,31 +9,35 @@ import { VaultProps } from '../constants/Vaults';
 import { useLocalSearchParams } from 'expo-router';
 
 import { useEffect, useState } from 'react';
-
-interface DepositProps {
-
-}
-interface VaultInfoProps {
-  vaultInfo: VaultProps,
-}
+import { checkBalance } from '../utilities/utils/checkBalance';
 
 export default function DepositModal() {
   //edit setting to as seen a cabana.fi
 
   const params = useLocalSearchParams();
   const { vault } = params;
+  const vault_: VaultProps = JSON.parse(vault.toLocaleString())
 
   const [amount, setAmount] = useState('0')
   const [reviewed, setReview] = useState<boolean | null>(null)
+  const [balanceMessage, setBalanceMessage] =useState<string| null>(null)
+
+  useEffect(()=>{
+    const balanceCheck = async() => {
+      const balancedMessage = await checkBalance(vault_.depositAsset, vault_.depositSymbol, vault_.decimals, amount)
+      setBalanceMessage(balancedMessage!)
+    }
+    balanceCheck()
+  },[amount])
 
   return (
     <View style={styles.container}>
       <View style={styles.title}>
         <Text>Deposit to {`Prize USDC`} on Optimism</Text>
       </View>
-      <DepositDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} reviewed={reviewed} />
+      <DepositDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} reviewed={reviewed} balanceMessage={balanceMessage} setBalanceMessage={setBalanceMessage} />
       <DepositEstimate/>
-      <DepositSwap vault={JSON.parse(vault.toLocaleString())} amount={amount} reviewed={reviewed} setReview={setReview}/>
+      <DepositSwap vault={JSON.parse(vault.toLocaleString())} amount={amount} reviewed={reviewed} setReview={setReview} balanceMessage={balanceMessage} />
     </View>
   );
 }

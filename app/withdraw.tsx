@@ -8,16 +8,28 @@ import WithdrawEstimate from '../components/withdraw/WithdrawEstimate';
 import { useLocalSearchParams } from 'expo-router';
 
 import { useEffect, useState } from 'react';
+import { checkBalance } from '../utilities/utils/checkBalance';
+import { VaultProps } from '../constants/Vaults';
 
 export default function WithdrawModal() {
   //edit setting to as seen a cabana.fi
 
   const params = useLocalSearchParams();
   const { vault } = params;
+  const vault_ : VaultProps = JSON.parse(vault.toLocaleString())
 
   const [amount, setAmount] = useState('0')
   const [reviewed, setReview] = useState<boolean | null>(null)
+  const [balanceMessage, setBalanceMessage] =useState<string| null>(null)
 
+
+  useEffect(()=>{
+    const balanceCheck = async() => {
+      const balancedMessage = await checkBalance(vault_.prizeAsset, vault_.prizeSymbol, vault_.decimals, amount)
+      setBalanceMessage(balancedMessage!)
+    }
+    balanceCheck()
+  },[amount])
 
   return (
     <View style={styles.container}>
@@ -25,11 +37,11 @@ export default function WithdrawModal() {
         <Text>Withdraw from {`Prize USDC`} on Optimism</Text>
       </View>
 
-      <WithdrawDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} reviewed={reviewed}  />
+      <WithdrawDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} reviewed={reviewed}  balanceMessage={balanceMessage} setBalanceMessage={setBalanceMessage} />
       
       <WithdrawEstimate/>
       
-      <WithdrawSwap vault={JSON.parse(vault.toLocaleString())} amount={amount} reviewed={reviewed} setReview={setReview} />
+      <WithdrawSwap vault={JSON.parse(vault.toLocaleString())} amount={amount} reviewed={reviewed} setReview={setReview} balanceMessage={balanceMessage}/>
     </View>
   );
 }

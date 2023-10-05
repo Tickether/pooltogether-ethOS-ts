@@ -40,7 +40,7 @@ export default function DepositSwap({ vault, amount, reviewed, setReview, balanc
   return (
     <View style={styles.container}>
       {
-        amount == '0' || amount == '' 
+        amount == '0' || amount == '' || balanceMessage||  amountNotValidMessage || tooManyDecimalsMessage
         ?(
           <View>
             <View style={styles.enter}>

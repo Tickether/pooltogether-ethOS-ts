@@ -25,7 +25,7 @@ export default function WithdrawSwap({ vault, amount, reviewed, setReview, balan
   return (
     <View style={styles.container}>
       {
-        amount == '0' || amount == ''  
+        amount == '0' || amount == '' || balanceMessage||  amountNotValidMessage || tooManyDecimalsMessage
         ?(
           <View>
             <View style={styles.enter}>

@@ -10,6 +10,8 @@ import { useLocalSearchParams } from 'expo-router';
 
 import { useEffect, useState } from 'react';
 import { checkBalance } from '../utilities/utils/checkBalance';
+import { amountNotValid } from '../utilities/utils/amountNotValid';
+import { tooManyDecimals } from '../utilities/utils/tooManyDecimals';
 
 export default function DepositModal() {
   //edit setting to as seen a cabana.fi
@@ -20,7 +22,9 @@ export default function DepositModal() {
 
   const [amount, setAmount] = useState('0')
   const [reviewed, setReview] = useState<boolean | null>(null)
-  const [balanceMessage, setBalanceMessage] =useState<string| null>(null)
+  const [balanceMessage, setBalanceMessage] = useState<string| null>(null)
+  const [amountNotValidMessage, setAmountNotValidMessage] = useState<string| null>(null)
+  const [tooManyDecimalsMessage, setTooManyDecimalsMessage] = useState<string| null>(null)
 
   useEffect(()=>{
     const balanceCheck = async() => {
@@ -30,14 +34,30 @@ export default function DepositModal() {
     balanceCheck()
   },[amount])
 
+  useEffect(()=>{
+    const amountNotValidCheck = async() => {
+      const amountValidationMessage = amountNotValid(amount)
+      setAmountNotValidMessage(amountValidationMessage!)
+    }
+    amountNotValidCheck()
+  },[amount])
+
+  useEffect(()=>{
+    const tooManyDecimalsCheck = () => {
+      const tooManyDecimalMessage = tooManyDecimals(amount, vault_.decimals)
+      setTooManyDecimalsMessage(tooManyDecimalMessage!)
+    }
+    tooManyDecimalsCheck()
+  },[amount])
+
   return (
     <View style={styles.container}>
       <View style={styles.title}>
         <Text>Deposit to {`Prize USDC`} on Optimism</Text>
       </View>
-      <DepositDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} reviewed={reviewed} balanceMessage={balanceMessage} setBalanceMessage={setBalanceMessage} />
+      <DepositDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} reviewed={reviewed} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
       <DepositEstimate/>
-      <DepositSwap vault={JSON.parse(vault.toLocaleString())} amount={amount} reviewed={reviewed} setReview={setReview} balanceMessage={balanceMessage} />
+      <DepositSwap vault={JSON.parse(vault.toLocaleString())} amount={amount} reviewed={reviewed} setReview={setReview} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
     </View>
   );
 }

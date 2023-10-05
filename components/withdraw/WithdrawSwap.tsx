@@ -13,9 +13,11 @@ interface WithdrawSwapProps {
   reviewed: boolean | null // 'reviewed' prop
   setReview: (reviewed: boolean | null) => void // 'setReview' prop
   balanceMessage: string | null
+  amountNotValidMessage: string | null // 'amountNotValidMessage' prop
+  tooManyDecimalsMessage: string | null // 'tooManyDecimalsMessage' prop
 }
 
-export default function WithdrawSwap({ vault, amount, reviewed, setReview, balanceMessage } : WithdrawSwapProps) {
+export default function WithdrawSwap({ vault, amount, reviewed, setReview, balanceMessage, amountNotValidMessage, tooManyDecimalsMessage } : WithdrawSwapProps) {
   //edit setting to as seen a cabana.fi
   //const [reviewed, setReview] = useState<boolean>(false)
   //const [swimmable, setSwimmable] = useState<boolean>(false)

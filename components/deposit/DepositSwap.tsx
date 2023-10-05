@@ -15,9 +15,11 @@ interface DepositSwapProps {
   reviewed: boolean | null // 'reviewed' prop
   setReview: (reviewed: boolean | null) => void // 'setReview' prop
   balanceMessage: string | null
+  amountNotValidMessage: string | null // 'amountNotValidMessage' prop
+  tooManyDecimalsMessage: string | null // 'tooManyDecimalsMessage' prop
 }
 
-export default function DepositSwap({ vault, amount, reviewed, setReview, balanceMessage } : DepositSwapProps) {
+export default function DepositSwap({ vault, amount, reviewed, setReview, balanceMessage, amountNotValidMessage, tooManyDecimalsMessage } : DepositSwapProps) {
   //edit setting to as seen a cabana.fi
   //const [reviewed, setReview] = useState<boolean | null>(null)
   const [swimmable, setSwimmable] = useState<boolean>(false)
@@ -34,7 +36,7 @@ export default function DepositSwap({ vault, amount, reviewed, setReview, balanc
     } 
     checkSwimming()
   },[amount])
-  console.log(swimmable)
+  //console.log(swimmable)
   return (
     <View style={styles.container}>
       {

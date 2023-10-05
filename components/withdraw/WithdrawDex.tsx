@@ -14,18 +14,17 @@ interface WithdrawDexProps {
   setAmount: (amount: string) => void; // 'setAmount' prop
   reviewed: boolean | null
   balanceMessage: string | null// 'balanceMessage' prop
-  setBalanceMessage: (balanceMessage: string | null) => void // 'setBalanceMessage' prop
+  amountNotValidMessage: string | null // 'amountNotValidMessage' prop
+  tooManyDecimalsMessage: string | null // 'tooManyDecimalsMessage' prop
 
 }
 
-export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanceMessage, setBalanceMessage } : WithdrawDexProps) {
+export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanceMessage, amountNotValidMessage, tooManyDecimalsMessage } : WithdrawDexProps) {
   // currency conversion util
   // balance of deposit
   // balance of prize
-  //const [amount, setAmount] = useState<string>('0');
   const [assetBalanace, setAssetBalance] = useState<string>('0')
   const [prizeBalanace, setPrizeBalance] = useState<string>('0')
-  //const [balanceMessage, setBalanceMessage] =useState<string| null>(null)
   
   
 
@@ -61,6 +60,16 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanc
                 {
                   balanceMessage! && (
                     <Text>{balanceMessage}</Text>
+                  )
+                }
+                {
+                  amountNotValidMessage! && (
+                    <Text>{amountNotValidMessage}</Text>
+                  )
+                }
+                {
+                  tooManyDecimalsMessage! && (
+                    <Text>{tooManyDecimalsMessage}</Text>
                   )
                 }
               </View>

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
 import LearnInfo from '../../components/vaults/LearnInfo';
@@ -10,7 +10,7 @@ export default function VaultsScreen() {
 
   // display two vaults with deposit button
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/**Learn INfo */}
       <LearnInfo/>
 
@@ -24,7 +24,7 @@ export default function VaultsScreen() {
       }
       
 
-    </View>
+    </SafeAreaView>
   );
 }
 

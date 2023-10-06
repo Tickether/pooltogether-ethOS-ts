@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import LearnInfo from '../components/vaults/vault/LearnInfo';
@@ -8,13 +8,13 @@ import PrizeDocs from '../components/vaults/vault/PrizeDocs';
 export default function VaultModal() {
   //edit 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <LearnInfo/>
       
       <PrizePoolInfo/> 
 
       <PrizeDocs/>
-    </View>
+    </SafeAreaView>
   );
 }
 

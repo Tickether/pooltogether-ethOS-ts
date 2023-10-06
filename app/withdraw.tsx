@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 
 
 import { Text, View } from '../components/Themed';
@@ -52,9 +52,9 @@ export default function WithdrawModal() {
   },[amount])
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.title}>
-        <Text>Withdraw from {`Prize USDC`} on Optimism</Text>
+        <Text>Withdraw from {vault_.prizeName} on Optimism</Text>
       </View>
 
       <WithdrawDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} reviewed={reviewed}  balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
@@ -62,7 +62,7 @@ export default function WithdrawModal() {
       <WithdrawEstimate/>
       
       <WithdrawSwap vault={JSON.parse(vault.toLocaleString())} amount={amount} reviewed={reviewed} setReview={setReview} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
-    </View>
+    </SafeAreaView>
   );
 }
 

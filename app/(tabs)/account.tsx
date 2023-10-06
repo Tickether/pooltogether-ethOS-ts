@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
 import LearnInfo from '../../components/account/LearnInfo';
@@ -7,13 +7,13 @@ import PoolWinnings from '../../components/account/PoolWinnings';
 
 export default function AccountScreen() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <LearnInfo/>
 
       <PoolDeposits/>
 
       <PoolWinnings/>
-    </View>
+    </SafeAreaView>
   );
 }
 

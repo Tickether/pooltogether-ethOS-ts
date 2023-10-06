@@ -52,8 +52,8 @@ export default function DepositModal() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.title}>
-        <Text>Deposit to {`Prize USDC`} on Optimism</Text>
+      <View>
+        <Text style={styles.title}>Deposit to {vault_.prizeName} on Optimism</Text>
       </View>
       <DepositDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} reviewed={reviewed} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
       <DepositEstimate/>
@@ -67,8 +67,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
   },
   title: {
-
-  }
+    fontSize: 20, 
+    fontWeight: 'bold',
+  },
 });

@@ -20,4 +20,11 @@ export const poolABI = [
         stateMutability: 'nonpayable',
         type: 'function',
     },
+    {
+        inputs: [],
+        name: 'totalAssets',
+        outputs: [{ name: "", type: "uint256" }],
+        stateMutability: 'view',
+        type: 'function',
+    },
 ] as const;

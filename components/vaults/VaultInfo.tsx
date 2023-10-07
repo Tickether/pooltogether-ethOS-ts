@@ -6,6 +6,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { VaultProps } from '../../constants/Vaults';
 import { useEffect, useState } from 'react';
 import { getBalance } from '../../utilities/utils/getBalance';
+import { getTotalDeposits } from '../../utilities/utils/getTotalDeposits';
 
 interface VaultInfoProps {
   vault: VaultProps,
@@ -16,6 +17,7 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
   // display vault with deposit button
   // calculate price power and balance : pref from utils fuction
   const [prizeBalanace, setPrizeBalance] = useState<string>('0.00')
+  const [totalAssets, setTotalAssets] = useState<string>(`0.00`)
 
   useEffect(()=>{
     const getBalance_ = async () => {
@@ -24,7 +26,14 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
     }
     getBalance_()
   },[])
-  
+  useEffect(()=>{
+    const getTotalAssets = async () => {
+      const totalDeposits = await getTotalDeposits(vault.prizeAsset, vault.decimals)
+      setTotalAssets((totalDeposits))
+    }
+    getTotalAssets()
+  },[])
+
   return (
     <View style={styles.container}>
       
@@ -78,7 +87,7 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
             <Text>Total Deposits</Text>
           </View>
           <View>
-            <Text>$20,000</Text>
+            <Text>{totalAssets} {vault.depositSymbol}</Text>
           </View>
         </View>
       </View>

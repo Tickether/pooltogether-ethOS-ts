@@ -23,7 +23,7 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
       setPrizeBalance((PrizeBalance))
     }
     getBalance_()
-   })
+  },[])
   
   return (
     <View style={styles.container}>
@@ -60,7 +60,6 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
             </View>
           )
         }
-        
         <View style={styles.power}>
           <View style={styles.left}>
             <Text>Prize Power</Text>

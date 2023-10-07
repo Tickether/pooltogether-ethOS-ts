@@ -40,7 +40,7 @@ export default function DepositSwap({ vault, amount, reviewed, setReview, balanc
   return (
     <View style={styles.container}>
       {
-        amount == '0' || amount == '' || balanceMessage||  amountNotValidMessage || tooManyDecimalsMessage
+        amount == '0' || amount == '' || !balanceMessage ||  amountNotValidMessage || tooManyDecimalsMessage
         ?(
           <View>
             <View style={styles.enter}>
@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    width: '100%',
+    backgroundColor: 'red'
   },
   enter: {
 

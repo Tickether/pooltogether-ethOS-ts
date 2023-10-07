@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 
 
 import { Text, View } from '../components/Themed';
@@ -51,14 +51,14 @@ export default function DepositModal() {
   },[amount])
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View>
         <Text style={styles.title}>Deposit to {vault_.prizeName} on Optimism</Text>
       </View>
       <DepositDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} reviewed={reviewed} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
       <DepositEstimate/>
       <DepositSwap vault={JSON.parse(vault.toLocaleString())} amount={amount} reviewed={reviewed} setReview={setReview} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -66,8 +66,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     padding: 20,
+    gap: 50,
+    //backgroundColor: 'green'
   },
   title: {
     fontSize: 20, 

@@ -1,12 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 
 
 import { Text, View, } from '../Themed';
 import { useEffect, useState } from 'react';
 import { getBalance } from '../../utilities/utils/getBalance';
 import { VaultProps } from '../../constants/Vaults';
-import { checkBalance } from '../../utilities/utils/checkBalance';
 
 
 interface DepositDexProps {
@@ -51,7 +49,7 @@ export default function DepositDex({ vault, amount, setAmount, reviewed, balance
       {
         !reviewed 
         ?(
-          <View>
+          <View style={styles.review}>
             <View style={styles.deposit}>
               <View style={styles.amount}>
                 <TextInput 
@@ -79,8 +77,11 @@ export default function DepositDex({ vault, amount, setAmount, reviewed, balance
                 }
               </View>
               <View style={styles.balance}>
-                <Text>{vault.depositSymbol}</Text>
-                <Text>Balance: {assetBalanace}<TouchableOpacity><Text>Max</Text></TouchableOpacity></Text>
+                <Text style={styles.topText}>{vault.depositSymbol}</Text>
+                <View style={styles.maxBalance}>
+                  <Text>Balance: {assetBalanace}</Text><TouchableOpacity style={styles.max} onPress={()=> MaxBid()}><Text>Max</Text></TouchableOpacity>
+                </View>
+                
                 {
                   balanceMessage! && (
                     <Text></Text>
@@ -100,14 +101,14 @@ export default function DepositDex({ vault, amount, setAmount, reviewed, balance
                 <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
               </View>
               <View style={styles.balance}>
-                <Text>{vault.prizeSymbol}</Text>
+                <Text style={styles.topText}>{vault.prizeSymbol}</Text>
                 <Text>Balance: {prizeBalanace}</Text>
               </View>
             </View>
           </View>
         ) 
         :(
-          <View>
+          <View style={styles.reviewed}>
             <View style={styles.deposit}>
               <View style={styles.amount}>
                 <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
@@ -130,32 +131,97 @@ export default function DepositDex({ vault, amount, setAmount, reviewed, balance
     </View>
   );
 }
-
+/*
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    
+  },
+  deposit: {
+    marginBottom: 20,
+  },
+  amount: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  input: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    height: 40,
+  },
+  balance: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  prize: {
+    marginBottom: 20,
+  },
+});
+*/
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    width: '100%',
+    backgroundColor: 'orange'
+  },
+  review: {
+    width: '100%',
+    gap: 5,
+    alignItems: 'center'
+  },
+  reviewed: {
+    width: '100%',
   },
   deposit: {
-    
-   flexDirection: 'row'
+    width: '95%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   prize: {
-    flexDirection: 'row'
+    width: '95%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   amount: {
     flexDirection: 'column',
-    backgroundColor: 'red',
-    justifyContent: 'flex-start'
+    justifyContent: 'center',
+    flex: 5
   
   },
   input: {
     borderWidth: 1,
+    fontSize: 20,
+    color: 'white'
+  },
+  bottomText: {
+
+  },
+  dexWrapper: {
+
+  },
+  topText: {
+    fontSize: 18
   },
   balance: {
     flexDirection: 'column',
-    backgroundColor: 'blue',
-    justifyContent: 'flex-end'
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    flex: 3
+  },
+  maxBalance:{
+    flexDirection: 'row'
+  },
+  max: {
+    backgroundColor: 'red'
   }
+  
+  
 });

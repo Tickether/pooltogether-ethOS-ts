@@ -4,6 +4,8 @@ import { Text, View } from '../Themed';
 import { Link } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import { VaultProps } from '../../constants/Vaults';
+import { useEffect, useState } from 'react';
+import { getBalance } from '../../utilities/utils/getBalance';
 
 interface VaultInfoProps {
   vault: VaultProps,
@@ -13,6 +15,15 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
 
   // display vault with deposit button
   // calculate price power and balance : pref from utils fuction
+  const [prizeBalanace, setPrizeBalance] = useState<string>('0.00')
+
+  useEffect(()=>{
+    const getBalance_ = async () => {
+      const PrizeBalance = await getBalance(vault.prizeAsset, vault.decimals)
+      setPrizeBalance((PrizeBalance))
+    }
+    getBalance_()
+   })
   
   return (
     <View style={styles.container}>
@@ -37,6 +48,19 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
       </View>
 
       <View style={styles.down}>
+        {
+          prizeBalanace != '0.00' && (
+            <View style={styles.balance}>
+              <View>
+                <Text>Balance</Text>
+              </View>
+              <View>
+                <Text>{prizeBalanace} {vault.depositSymbol}</Text>
+              </View>
+            </View>
+          )
+        }
+        
         <View style={styles.power}>
           <View style={styles.left}>
             <Text>Prize Power</Text>
@@ -82,6 +106,9 @@ const styles = StyleSheet.create({
   },
   down: {
 
+  },
+  balance:{
+    flexDirection: 'row'
   },
   power: {
     flexDirection: 'row'

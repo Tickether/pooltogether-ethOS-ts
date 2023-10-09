@@ -27,31 +27,31 @@ export default function WithdrawSwap({ vault, amount, reviewed, setReview, balan
       {
         amount == '0' || amount == '' || balanceMessage||  amountNotValidMessage || tooManyDecimalsMessage
         ?(
-          <View>
-            <View style={styles.enter}>
-              <Text>
-                Enter an amount
-              </Text>
-            </View>
+          <View style={styles.enter}>
+            <Text>
+              Enter an amount
+            </Text>
           </View>
         ) 
         :(
-          <View>
+          <View style={styles.actions}>
             {!reviewed && (
               <View style={styles.review}>
                 <TouchableOpacity
+                  style={styles.reviewAction}
                   onPress={()=> setReview(true)}
                 >
-                  <Text>Review Withdraw</Text>
+                  <Text style={styles.withdrawText}>Review Withdraw</Text>
                 </TouchableOpacity>
               </View>
             )}
             {reviewed && (
               <View style={styles.withdraw}>
                 <TouchableOpacity
+                  style={styles.withdrawAction}
                   onPress={()=>{ leavePool(vault.prizeAsset, amount, vault.decimals)}}
                 >
-                  <Text>Withdraw</Text>
+                  <Text style={styles.withdrawText}>Withdraw</Text>
                 </TouchableOpacity>
               </View>
             )}
@@ -66,15 +66,50 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    width: '100%',
+    backgroundColor: '#4C249F',
   },
   enter: {
-
+    backgroundColor: '#552EA4',
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+  },
+  actions:{
+    width: '100%',
   },
   review: {
-
+    width: '100%',
+    
+  },
+  reviewAction: {
+    width: '100%',
+    backgroundColor: '#35F0D0',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 5, 
+    paddingTop: 10, 
+    paddingBottom: 10,
   },
   withdraw: {
+    width: '100%',
+  },
+  withdrawAction: {
+    width: '100%',
+    backgroundColor: '#35F0D0',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 5, 
+    paddingTop: 10, 
+    paddingBottom: 10,
+  },
+  withdrawText:{
+    color: '#36147D',
+  },
 
-  }
 });

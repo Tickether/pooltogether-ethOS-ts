@@ -38,7 +38,9 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanc
     getBalances()
   })
 
-  
+  const MaxBid = () => {
+    setAmount(prizeBalanace)
+   }
 
 
   return (
@@ -46,7 +48,7 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanc
       {
         !reviewed 
         ?(
-          <View>
+          <View style={styles.review}>
             <View style={styles.prize}>
               <View style={styles.amount}>
                 <TextInput
@@ -56,26 +58,28 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanc
                   value={amount!}
                   onChangeText={setAmount}
                 />
-                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                <Text style={styles.bottomText}>${amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
                 {
                   balanceMessage! && (
-                    <Text>{balanceMessage}</Text>
+                    <Text style={styles.error}>{balanceMessage}</Text>
                   )
                 }
                 {
                   amountNotValidMessage! && (
-                    <Text>{amountNotValidMessage}</Text>
+                    <Text style={styles.error}>{amountNotValidMessage}</Text>
                   )
                 }
                 {
                   tooManyDecimalsMessage! && (
-                    <Text>{tooManyDecimalsMessage}</Text>
+                    <Text style={styles.error}>{tooManyDecimalsMessage}</Text>
                   )
                 }
               </View>
               <View style={styles.balance}>
-                <Text>{vault.prizeSymbol}</Text>
-                <Text>Balance: {prizeBalanace}<TouchableOpacity><Text>Max</Text></TouchableOpacity></Text>
+                <Text style={styles.topText}>{vault.prizeSymbol}</Text>
+                <View style={styles.maxBalance}>
+                  <Text style={styles.bottomText}>Balance: {prizeBalanace}</Text><TouchableOpacity style={styles.max} onPress={()=> MaxBid()}><Text style={styles.bottomText}>Max</Text></TouchableOpacity>
+                </View>
                 {
                   balanceMessage! && (
                     <Text></Text>
@@ -92,31 +96,31 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanc
                   value={amount!}
                   onChangeText={setAmount}
                 />
-                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                <Text style={styles.bottomText}>${amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
               </View>
               <View style={styles.balance}>
-                <Text>{vault.depositSymbol}</Text>
-                <Text>Balance: {assetBalanace}</Text>
+                <Text style={styles.topText}>{vault.depositSymbol}</Text>
+                <Text style={styles.bottomText}>Balance: {assetBalanace}</Text>
               </View>
             </View>
           </View>
         ) 
         :(
-          <View>
+          <View style={styles.reviewed}>
             <View style={styles.prize}>
               <View style={styles.amount}>
-                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                <Text style={styles.topText}>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
               </View>
               <View style={styles.balance}>
-                <Text>{vault.prizeSymbol}</Text>
+                <Text style={styles.topText}>{vault.prizeSymbol}</Text>
               </View>
             </View>
             <View style={styles.withdraw}>
               <View style={styles.amount}>
-                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                <Text style={styles.topText}>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
               </View>
               <View style={styles.balance}>
-                <Text>{vault.depositSymbol}</Text>
+                <Text style={styles.topText}>{vault.depositSymbol}</Text>
               </View>
             </View>
           </View>
@@ -130,21 +134,79 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    width: '100%',
+    backgroundColor: '#4C249F',
+  },
+  review: {
+    backgroundColor: '#4C249F',
+    width: '100%',
+    gap: 5,
+    alignItems: 'center',
+    
+  },
+  reviewed: {
+    backgroundColor: '#4C249F',
+    width: '100%',
+    gap: 5,
+    alignItems: 'center',
   },
   prize: {
-    flexDirection: 'row'
+    backgroundColor: '#5D38A9',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 10, 
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 20
   },
   withdraw: {
-    flexDirection: 'row'
+    backgroundColor: '#5D38A9',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 10, 
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 20
   },
   amount: {
-  
+    backgroundColor: '#5D38A9',
+    gap: 5,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    flex: 5
   },
   input: {
-    borderWidth: 1,
+    fontSize: 23,
+    color: '#9CA3AF',
+    fontWeight: 'bold',
+  },
+  bottomText: {
+    color: '#D7C6FB',
+    fontSize: 17
+  },
+  topText: {
+    fontSize: 23,
+    fontWeight: 'bold',
   },
   balance: {
-  
+    backgroundColor: '#5D38A9',
+    gap: 5,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    flex: 3
+  },
+  maxBalance:{
+    flexDirection: 'row',
+    backgroundColor: '#5D38A9',
+    gap: 5
+  },
+  max: {
+    
+  },
+  error: {
+    color: '#EBA7B4'
   }
 });

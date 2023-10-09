@@ -40,54 +40,58 @@ export default function DepositSwap({ vault, amount, reviewed, setReview, balanc
   return (
     <View style={styles.container}>
       {
-        amount == '0' || amount == '' || !balanceMessage ||  amountNotValidMessage || tooManyDecimalsMessage
+        amount == '0' || amount == '' || balanceMessage ||  amountNotValidMessage || tooManyDecimalsMessage
         ?(
-          <View>
             <View style={styles.enter}>
               <Text>
                 Enter an amount
               </Text>
             </View>
-          </View>
         ) 
         :(
-          <View>
+          <View style={styles.swimmable}>
             {
               !swimmable 
               ?(
-                <View>
-                  <View style={styles.approve}>
+                <View style={styles.approve}>
+                  <View style={styles.approveAmount}>
                     <TouchableOpacity
+                      style={styles.approveAmountAction}
                       onPress={()=> approveSwimSesh(vault.depositAsset, vault.prizeAsset, amount, vault.decimals)}//fix amount with prop
                     >
-                      <Text>Approve exact amount of {vault.depositSymbol}</Text>
+                      <Text style={styles.approveText}>Approve exact amount of {vault.depositSymbol}</Text>
                     </TouchableOpacity>
+                  </View>
+                  <View style={styles.approveUnlimited}>
                     <TouchableOpacity
+                      style={styles.approveUnlimitedAction}
                       onPress={()=> approveSwimSesh(vault.depositAsset, vault.prizeAsset, '999999999999', vault.decimals)}// static unlimted approvall
                     >
-                      <Text>Approve unlimited amount of {vault.depositSymbol}</Text>
+                      <Text style={styles.unlimtedText}>Approve unlimited amount of {vault.depositSymbol}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
               ) 
               :(
-                <View>
+                <View style={styles.actions}>
                   
                   {reviewed == false && (
                     <View style={styles.review}>
                       <TouchableOpacity
+                        style={styles.reviewAction}
                         onPress={()=> setReview(true)}
                       >
-                        <Text>Review Deposit</Text>
+                        <Text style={styles.depositText}>Review Deposit</Text>
                       </TouchableOpacity>
                     </View>
                   )}
                   {reviewed && (
                     <View style={styles.deposit}>
                       <TouchableOpacity
+                        style={styles.depositAction}
                         onPress={()=>{ goSwimming(vault.prizeAsset, amount, vault.decimals)}}
                       >
-                        <Text>Deposit</Text>
+                        <Text style={styles.depositText}>Deposit</Text>
                       </TouchableOpacity>
                     </View>
                   )}
@@ -107,18 +111,93 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     width: '100%',
-    backgroundColor: 'red'
+    backgroundColor: '#4C249F',
   },
   enter: {
-
+    backgroundColor: '#552EA4',
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center'
   },
   approve: {
-
+    backgroundColor: '#4C249F',
+    width: '100%',
+    gap: 10
+  },
+  approveAmount: {
+    backgroundColor: '#4C249F',
+    width: '100%',
+  },
+  approveUnlimited: {
+    backgroundColor: '#4C249F',
+    width: '100%',
   },
   review: {
-
+    backgroundColor: '#4C249F',
+    width: '100%'
   },
   deposit: {
-
-  }
+    backgroundColor: '#4C249F',
+    width: '100%',
+    
+  },
+  actions:{
+    width: '100%',
+  },
+  swimmable:{
+    width: '100%',
+  },
+  reviewAction: {
+    width: '100%',
+    backgroundColor: '#35F0D0',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 5, 
+    paddingTop: 10, 
+    paddingBottom: 10,
+  },
+  
+  depositAction: {
+    width: '100%',
+    backgroundColor: '#35F0D0',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 5, 
+    paddingTop: 10, 
+    paddingBottom: 10,
+  },
+  approveAmountAction: {
+    width: '100%',
+    backgroundColor: '#35F0D0',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 5, 
+    paddingTop: 10, 
+    paddingBottom: 10,
+  },
+  approveUnlimitedAction: {
+    width: '100%',
+    backgroundColor: '#4A3270',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 5, 
+    paddingTop: 10, 
+    paddingBottom: 10,
+  },
+  approveText:{
+    color: '#36147D',
+  },
+  depositText:{
+    color: '#36147D',
+  },
+  unlimtedText:{
+    color: '#DECEFF',
+  },
 });

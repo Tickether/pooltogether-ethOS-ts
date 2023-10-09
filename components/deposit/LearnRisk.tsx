@@ -10,14 +10,17 @@ export default function LearnRisk() {
   return (
     <View style={styles.container}>
       <View style={styles.top}>
-        <FontAwesome name='info-circle'/><Text>Learn about the risks:</Text>
-      </View>
-      <View style={styles.mid}>
-        <Text>PoolTogether prize vaults can be deployed by anyone.<Link href='https://docs.cabana.fi/'><Text>Know what you are depositing into</Text><FontAwesome name='external-link'/></Link></Text>
+        <FontAwesome name='info-circle' size={16} color='#FAB2B6'/><Text style={styles.title}>Learn about the risks:</Text>
       </View>
       <View style={styles.down}>
-        <Link href='https://cabana.fi/terms'><Text>Terms of Service</Text></Link>
+        <Text>PoolTogether is a permissionless protocol. Prize vaults can be deployed by anyone. Make sure you know what you are depositing into.</Text>
+        <Link href='https://cabana.fi/terms'>
+          <Text style={styles.link}>Learn more about this prize vault.</Text>
+        </Link>
       </View>
+      
+        
+      
     </View>
   );
 }
@@ -25,16 +28,31 @@ export default function LearnRisk() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#5D38A9',
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 10, 
+    padding: 20,
+    gap: 15
   },
   top: {
-
+    backgroundColor: '#5D38A9',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    color: '#DECEFA',
   },
-  mid: {
-
+  title: {
+    color: '#DECEFA',
+    fontWeight: 'bold'
   },
   down: {
-
+    backgroundColor: '#5D38A9',
   },
+  link:{
+    color: '#B18CFF'
+  }
 });

@@ -56,30 +56,30 @@ export default function DepositDex({ vault, amount, setAmount, reviewed, balance
                   style={styles.input}
                   placeholder='0'
                   keyboardType="numeric"
-                  value={amount!}
+                  value={amount! ? amount : ''}
                   onChangeText={setAmount}
                 />
-                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                <Text style={styles.bottomText}>${amount! ? amount : '0.00'}{/**pass number of tokens thru cypro price coversion*/}</Text>
                 {
                   balanceMessage! && (
-                    <Text>{balanceMessage}</Text>
+                    <Text style={styles.error}>{balanceMessage}</Text>
                   )
                 }
                 {
-                  amountNotValidMessage! && (
-                    <Text>{amountNotValidMessage}</Text>
+                  amountNotValidMessage! && amount! && (
+                    <Text style={styles.error}>{amountNotValidMessage}</Text>
                   )
                 }
                 {
                   tooManyDecimalsMessage! && !balanceMessage &&(
-                    <Text>{tooManyDecimalsMessage}</Text>
+                    <Text style={styles.error}>{tooManyDecimalsMessage}</Text>
                   )
                 }
               </View>
               <View style={styles.balance}>
                 <Text style={styles.topText}>{vault.depositSymbol}</Text>
                 <View style={styles.maxBalance}>
-                  <Text>Balance: {assetBalanace}</Text><TouchableOpacity style={styles.max} onPress={()=> MaxBid()}><Text>Max</Text></TouchableOpacity>
+                  <Text style={styles.bottomText}>Balance: {assetBalanace}</Text><TouchableOpacity style={styles.max} onPress={()=> MaxBid()}><Text style={styles.bottomText}>Max</Text></TouchableOpacity>
                 </View>
                 
                 {
@@ -95,14 +95,14 @@ export default function DepositDex({ vault, amount, setAmount, reviewed, balance
                   style={styles.input}
                   placeholder='0'
                   keyboardType="numeric"
-                  value={amount!}
+                  value={amount! ? amount : ''}
                   onChangeText={setAmount}
                 />
-                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                <Text style={styles.bottomText}>${amount! ? amount : '0.00'}{/**pass number of tokens thru cypro price coversion*/}</Text>
               </View>
               <View style={styles.balance}>
                 <Text style={styles.topText}>{vault.prizeSymbol}</Text>
-                <Text>Balance: {prizeBalanace}</Text>
+                <Text style={styles.bottomText}>Balance: {prizeBalanace}</Text>
               </View>
             </View>
           </View>
@@ -111,18 +111,18 @@ export default function DepositDex({ vault, amount, setAmount, reviewed, balance
           <View style={styles.reviewed}>
             <View style={styles.deposit}>
               <View style={styles.amount}>
-                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                <Text style={styles.topText}>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
               </View>
               <View style={styles.balance}>
-                <Text>{vault.depositSymbol}</Text>
+                <Text style={styles.topText}>{vault.depositSymbol}</Text>
               </View>
             </View>
             <View style={styles.prize}>
               <View style={styles.amount}>
-                <Text>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                <Text style={styles.topText}>{amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
               </View>
               <View style={styles.balance}>
-                <Text>{vault.prizeSymbol}</Text>
+                <Text style={styles.topText}>{vault.prizeSymbol}</Text>
               </View>
             </View>
           </View>
@@ -131,96 +131,86 @@ export default function DepositDex({ vault, amount, setAmount, reviewed, balance
     </View>
   );
 }
-/*
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    
-  },
-  deposit: {
-    marginBottom: 20,
-  },
-  amount: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  input: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    height: 40,
-  },
-  balance: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  prize: {
-    marginBottom: 20,
-  },
-});
-*/
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     width: '100%',
-    backgroundColor: 'orange'
+    backgroundColor: '#4C249F',
   },
   review: {
+    backgroundColor: '#4C249F',
     width: '100%',
     gap: 5,
-    alignItems: 'center'
+    alignItems: 'center',
+    
   },
   reviewed: {
+    backgroundColor: '#4C249F',
     width: '100%',
+    gap: 5,
+    alignItems: 'center',
   },
   deposit: {
-    width: '95%',
+    backgroundColor: '#5D38A9',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 10, 
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    padding: 20
   },
   prize: {
-    width: '95%',
+    backgroundColor: '#5D38A9',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 10, 
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    padding: 20
   },
   amount: {
+    backgroundColor: '#5D38A9',
+    gap: 5,
     flexDirection: 'column',
     justifyContent: 'center',
     flex: 5
   
   },
   input: {
-    borderWidth: 1,
-    fontSize: 20,
-    color: 'white'
+    fontSize: 23,
+    color: '#9CA3AF',
+    fontWeight: 'bold',
   },
   bottomText: {
-
-  },
-  dexWrapper: {
-
+    color: '#D7C6FB',
+    fontSize: 17
   },
   topText: {
-    fontSize: 18
+    fontSize: 23,
+    fontWeight: 'bold',
   },
   balance: {
+    backgroundColor: '#5D38A9',
+    gap: 5,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-end',
     flex: 3
   },
   maxBalance:{
-    flexDirection: 'row'
+    flexDirection: 'row',
+    backgroundColor: '#5D38A9',
+    gap: 5
   },
   max: {
-    backgroundColor: 'red'
+    
+  },
+  error: {
+    color: '#EBA7B4'
   }
   
   

@@ -53,8 +53,8 @@ export default function WithdrawModal() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.title}>
-        <Text>Withdraw from {vault_.prizeName} on Optimism</Text>
+      <View>
+        <Text style={styles.title}>Withdraw from {vault_.prizeName} on Optimism</Text>
       </View>
 
       <WithdrawDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} reviewed={reviewed}  balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
@@ -70,9 +70,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    padding: 20,
+    gap: 50,
+    backgroundColor: '#4C249F',
   },
   title: {
-    
+    backgroundColor: '#4C249F',
+    fontSize: 20, 
+    fontWeight: 'bold',
   }
 });

@@ -38,93 +38,185 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
     <View style={styles.container}>
       
       <View style={styles.top}>
-
-        <View style={styles.caption}>
           <Link href="/vault">
-            <Text>{vault.prizeName}</Text>
-            <Text>{vault.prizeSymbol}</Text>
+            <View style={styles.caption}>
+              <Text style={styles.name}>{vault.prizeName}</Text>
+              <Text style={styles.symbol}>{vault.prizeSymbol}</Text>
+            </View>
           </Link>
-        </View>
-
-        <View style={styles.actions}>
-          <TouchableOpacity>
-            <Link href={{pathname: "/withdraw", params: { vault: JSON.stringify(vault)}}}><Text>Withdraw</Text></Link>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Link href={{pathname: "/deposit", params: { vault: JSON.stringify(vault)}}}><Text>Deposit</Text></Link>
-          </TouchableOpacity>
-        </View>
       </View>
 
-      <View style={styles.down}>
+      <View style={styles.mid}>
         {
           prizeBalanace != '0.00' && (
             <View style={styles.balance}>
-              <View>
-                <Text>Balance</Text>
-              </View>
-              <View>
-                <Text>{prizeBalanace} {vault.depositSymbol}</Text>
-              </View>
+              
+              <Text style={styles.title}>Balance</Text>
+            
+              <Text style={styles.title}>{prizeBalanace} {vault.depositSymbol}</Text>
+            
             </View>
           )
         }
         <View style={styles.power}>
           <View style={styles.left}>
-            <Text>Prize Power</Text>
+            <Text style={styles.title}>Prize Power</Text>
             <FontAwesome
               name="info-circle"
               size={16}
-              color='white'
+              color='#A3A1FF'
             />
           </View>
-          <View>
+          <View style={styles.right}>
             <Text>88.77%</Text>
           </View>
         </View>
         <View style={styles.total}>
-          <View>
-            <Text>Total Deposits</Text>
-          </View>
-          <View>
-            <Text>{totalAssets} {vault.depositSymbol}</Text>
-          </View>
+         
+          <Text style={styles.title}>Total Deposits</Text>
+          <Text>{totalAssets} {vault.depositSymbol}</Text>
+          
         </View>
       </View>
 
+      <View style={styles.down}>
+        {
+          prizeBalanace == '0.00' 
+          ?(
+            <View style={styles.action}>
+              <TouchableOpacity style={styles.actionDeposit}>
+                <Link href={{pathname: "/deposit", params: { vault: JSON.stringify(vault)}}}><Text style={styles.depositText}>Deposit</Text></Link>
+              </TouchableOpacity>
+            </View>
+          )
+          :(
+            <View style={styles.actions}>
+              <TouchableOpacity style={styles.actionsDeposit}>
+                <Link href={{pathname: "/deposit", params: { vault: JSON.stringify(vault)}}}><Text style={styles.depositText}>Deposit</Text></Link>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.actionsWithdraw}>
+                <Link href={{pathname: "/withdraw", params: { vault: JSON.stringify(vault)}}}><Text style={styles.withdrawText}>Withdraw</Text></Link>
+              </TouchableOpacity>
+            </View>
+          )
+        }
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 0,
+    width: '100%',
+    backgroundColor: '#371D60',
+    borderWidth: 1,
+    borderColor: '#371D60',
+    borderRadius: 5, 
+    alignSelf: 'center',
+    padding: 20,
+    gap: 20,
   },
   top: {
+    backgroundColor: '#371D60',
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'flex-start'
   },
   caption: {
+    backgroundColor: '#4A3270',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 5,
+    padding: 10,
+    gap: 5
+  },
+  name: {
 
+  },
+  symbol: {
+    color: '#A3A1FF',
+
+  },
+  action: {
+    width: '100%',
+  },
+  actionDeposit:{
+    width: '100%',
+    backgroundColor: '#35F0D0',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 5, 
+    paddingTop: 10, 
+    paddingBottom: 10,
+  },
+  depositText:{
+    color: '#36147D',
+  },
+  withdrawText:{
+    color: '#DECEFF',
   },
   actions: {
-    flexDirection: 'row'
+    backgroundColor: '#371D60',
+    flexDirection: 'row',
+    width: '100%',
+    
+  },
+  actionsDeposit:{
+    width: '50%',
+    backgroundColor: '#35F0D0',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 5,
+    paddingTop: 10, 
+    paddingBottom: 10,
+  },
+  actionsWithdraw:{
+    width: '50%',
+    backgroundColor: '#4A3270',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#5D38A9',
+    borderRadius: 5, 
+    paddingTop: 10, 
+    paddingBottom: 10,
+  },
+  mid: {
+    backgroundColor: '#371D60',
+    gap: 3
+  },
+  title:{
+    color: '#A3A1FF',
   },
   down: {
-
+    backgroundColor: '#371D60',
+    alignItems: 'center'
   },
   balance:{
-    flexDirection: 'row'
+    backgroundColor: '#371D60',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   power: {
-    flexDirection: 'row'
+    backgroundColor: '#371D60',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   left: {
+    backgroundColor: '#371D60',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3
+  },
+  right: {
+    backgroundColor: '#371D60',
     flexDirection: 'row'
   },
   total: {
+    backgroundColor: '#371D60',
+    justifyContent: 'space-between',
     flexDirection: 'row'
   },
 });

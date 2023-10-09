@@ -29,10 +29,7 @@ export default function LearnInfo() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    gap: 5,
-    alignItems: 'center',
-    justifytitleContent: 'center',
+    backgroundColor: '#21064E',
   },
   version: {
  

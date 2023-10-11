@@ -9,17 +9,17 @@ export default function LearnInfo() {
   // https://gov.pooltogether.com/t/v5-private-beta-launch-information/3021
   return (
     <View style={styles.container}>
-      <View style={styles.version}>
-        <Text>BETA</Text>
+      <View>
+        <Text style={styles.version}>BETA</Text>
       </View>
-      <View style={styles.title}>
-        <Text>Learn more on the gov forum</Text>
+      <View>
+        <Text style={styles.title}>Learn more on the gov forum</Text>
       </View>
       <View style={styles.icon}>
         <FontAwesome
           name="external-link"
           size={16}
-          color='white'
+          color='#A489D8'
         />
       </View>
     </View>
@@ -28,16 +28,32 @@ export default function LearnInfo() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#21064E',
+    flex: 0,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#371D60',
+    borderWidth: 1,
+    borderColor: '#371D60',
+    borderRadius: 7,
+    gap: 6,
+    padding: 15,
   },
   version: {
- 
-  },
-  title: {
+    backgroundColor: '#371D60',
+    color: '#DC2626',
+    borderWidth: 1,
+    borderColor: '#DC2626',
+    borderRadius: 5,
+    padding: 7
    
   },
+  title: {
+    backgroundColor: '#371D60',
+    color: '#A489D8',
+  },
   icon: {
-    
+    backgroundColor: '#371D60',
   },
 });

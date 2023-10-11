@@ -1,4 +1,4 @@
-import { encodeFunctionData } from 'viem'
+import { encodeFunctionData, isHex } from 'viem'
 import { poolABI } from '../abis/poolABI'
 import { getAddress } from './getAddress'
 import * as ExpoWalletsdk from 'expo-walletsdk'
@@ -21,9 +21,17 @@ export const goSwimming = async (contract: string, amount: string, decimals: num
             chainRPCUrl: 'https://mainnet.optimism.io'
         };
         try {
-            const txHash = ExpoWalletsdk.sendTransaction(transaction);
-            console.log(txHash)
-            return txHash
+            const res = ExpoWalletsdk.sendTransaction(transaction);
+            if (isHex(res)) {
+                const txHash = res
+                return txHash
+            } else {
+                const message = res
+                return message
+            }
+            //console.log(txHash)
+            //console.log(isHex(txHash))
+            //return isHex(txHash) ? txHash : null
         } catch (error) {
             console.log(error)
         }

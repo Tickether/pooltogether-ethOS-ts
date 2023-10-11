@@ -67,7 +67,7 @@ export default function DepositModal() {
         )
       }
       
-      <DepositSwap vault={JSON.parse(vault.toLocaleString())} amount={amount!} reviewed={reviewed} setReview={setReview} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
+      <DepositSwap vault={JSON.parse(vault.toLocaleString())} amount={amount!} reviewed={reviewed} setAmount={setAmount} setReview={setReview} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
     </SafeAreaView>
   );
 }

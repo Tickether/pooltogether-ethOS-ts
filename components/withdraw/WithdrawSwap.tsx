@@ -6,10 +6,14 @@ import { Text, View } from '../Themed';
 import { VaultProps } from '../../constants/Vaults';
 import { leavePool } from '../../utilities/utils/leavePool';
 import { useState } from 'react';
+import Sunbathing from './Sunbathing';
+import SunError from './SunError';
+import { isHex } from 'viem';
 
 interface WithdrawSwapProps {
   vault: VaultProps,
-  amount: string;
+  amount: string | null;
+  setAmount: (amount: string | null) => void
   reviewed: boolean | null // 'reviewed' prop
   setReview: (reviewed: boolean | null) => void // 'setReview' prop
   balanceMessage: string | null
@@ -17,20 +21,30 @@ interface WithdrawSwapProps {
   tooManyDecimalsMessage: string | null // 'tooManyDecimalsMessage' prop
 }
 
-export default function WithdrawSwap({ vault, amount, reviewed, setReview, balanceMessage, amountNotValidMessage, tooManyDecimalsMessage } : WithdrawSwapProps) {
+export default function WithdrawSwap({ vault, amount, setAmount, reviewed, setReview, balanceMessage, amountNotValidMessage, tooManyDecimalsMessage } : WithdrawSwapProps) {
   //edit setting to as seen a cabana.fi
   const [hash, setHash] = useState<string | null>(null)
-  //const [swimmable, setSwimmable] = useState<boolean>(false)
+  const [message, setMessage] = useState<string | null>(null)
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [openError, setOpenError] = useState<boolean>(false)
 
   const leavingPool = async () => {
-    const txn = await leavePool(vault.prizeAsset, amount, vault.decimals)
-    setHash(txn)
+    //loading ux? on withdraw button until pop
+    const res = await leavePool(vault.prizeAsset, amount!, vault.decimals)
+    if (isHex(res)) {
+      setHash(res!)
+      setOpenModal(true)
+    }
+    if (!isHex(res)) {
+      setMessage(res)
+      setOpenError(true)
+    }
   }
 
   return (
     <View style={styles.container}>
       {
-        amount == '0' || amount == '' || balanceMessage||  amountNotValidMessage || tooManyDecimalsMessage
+        amount == '0' || amount == '' || balanceMessage || amountNotValidMessage || tooManyDecimalsMessage
         ?(
           <View style={styles.enter}>
             <Text>
@@ -63,6 +77,8 @@ export default function WithdrawSwap({ vault, amount, reviewed, setReview, balan
           </View>
         )
       }
+      <Sunbathing vault={vault} amount={amount!} hash={hash!} openModal={openModal} setOpenModal={setOpenModal}/>
+      <SunError message={message!} setAmount={setAmount} setReview={setReview} openError={openError} setOpenError={setOpenError}/>
     </View>
   );
 }

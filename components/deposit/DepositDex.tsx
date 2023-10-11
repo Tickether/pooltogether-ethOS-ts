@@ -71,7 +71,7 @@ export default function DepositDex({ vault, amount, setAmount, reviewed, balance
                   )
                 }
                 {
-                  tooManyDecimalsMessage! && !balanceMessage &&(
+                  tooManyDecimalsMessage! && !balanceMessage && (
                     <Text style={styles.error}>{tooManyDecimalsMessage}</Text>
                   )
                 }

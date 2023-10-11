@@ -1,21 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { View, Text } from '../Themed';
 import { VaultProps } from '../../constants/Vaults';
 import { Link } from 'expo-router';
+import { getConfirmations } from '../../utilities/utils/getConfirmations';
 
 interface SwimmingProps {
     vault: VaultProps,
     amount: string,
     hash: string,
+    openModal: boolean,
+    setOpenModal: (openModal: boolean) => void 
 }
 
-export default function Swimming({ vault, amount, hash } : SwimmingProps) {
-    const [openModal, setOpenModal] = useState<boolean>(false)
-    const [isConfirming, setConfirming] = useState<boolean | null>(null)
+export default function Swimming({ vault, amount, hash, openModal, setOpenModal } : SwimmingProps) {
+    
+    const [confirmed, setConfirmed] = useState<boolean | null>(null)
+
+    useEffect(()=>{
+        const getConfirms = async () =>{
+            const confirm = await getConfirmations(`0x${hash.slice(2)}`)
+            if (confirm) {
+                setConfirmed(true)
+            }
+        }
+        getConfirms
+    },[])
     
     return (
-        <Modal 
+        <Modal
+            
             visible={openModal} 
             animationType='slide' 
             transparent={true}
@@ -24,20 +38,22 @@ export default function Swimming({ vault, amount, hash } : SwimmingProps) {
             }}
         >
             <View style={styles.container}>
-                <Text style={styles.caption}>Swimming</Text>
-                <Text style={styles.info}>You deposted {amount} {vault.depositSymbol}</Text>
-                {isConfirming == null || isConfirming == true && (
-                    <View style={styles.image}></View>
-                )}
-                {isConfirming == false && (
-                    <View style={styles.image}></View>
-                )}                
-                <TouchableOpacity 
-                    style={styles.account}
-                    onPress={() => setOpenModal(!openModal)}
-                >
-                    <Link href={{pathname: "/account"}}><Text style={styles.viewAccount}>View Account</Text></Link>
-                </TouchableOpacity>
+                <View style={styles.modal}>
+                    <Text style={styles.caption}>Swimming</Text>
+                    <Text style={styles.info}>You deposted {amount} {vault.depositSymbol}</Text>
+                    {!confirmed && (
+                        <View style={styles.image}><Text>loading...</Text></View>
+                    )}
+                    {confirmed && (
+                        <View style={styles.image}><Text>true</Text></View>
+                    )}                
+                    <TouchableOpacity 
+                        style={styles.account}
+                        onPress={() => setOpenModal(!openModal)}
+                    >
+                        <Link href={{pathname: "/account"}}><Text style={styles.viewAccount}>View Account</Text></Link>
+                    </TouchableOpacity>
+                </View>
             </View>
         </Modal>
     );
@@ -46,9 +62,12 @@ export default function Swimming({ vault, amount, hash } : SwimmingProps) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        justifyContent: 'flex-end',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      },
+      modal: {
+        backgroundColor: '#4C249F',
         alignItems: 'center',
-        justifyContent: 'center',
       },
       caption: {
         

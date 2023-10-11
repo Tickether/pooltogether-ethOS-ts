@@ -20,7 +20,7 @@ export default function WithdrawModal() {
   const { vault } = params;
   const vault_ : VaultProps = JSON.parse(vault.toLocaleString())
 
-  const [amount, setAmount] = useState('0')
+  const [amount, setAmount] = useState<string | null>(null)
   const [reviewed, setReview] = useState<boolean | null>(null)
   const [balanceMessage, setBalanceMessage] =useState<string| null>(null)
   const [amountNotValidMessage, setAmountNotValidMessage] = useState<string| null>(null)
@@ -29,7 +29,7 @@ export default function WithdrawModal() {
 
   useEffect(()=>{
     const balanceCheck = async() => {
-      const balancedMessage = await checkBalance(vault_.prizeAsset, vault_.prizeSymbol, vault_.decimals, amount)
+      const balancedMessage = await checkBalance(vault_.prizeAsset, vault_.prizeSymbol, vault_.decimals, amount!)
       setBalanceMessage(balancedMessage!)
     }
     balanceCheck()
@@ -37,7 +37,7 @@ export default function WithdrawModal() {
 
   useEffect(()=>{
     const amountNotValidCheck = async() => {
-      const amountValidationMessage = amountNotValid(amount)
+      const amountValidationMessage = amountNotValid(amount!)
       setAmountNotValidMessage(amountValidationMessage!)
     }
     amountNotValidCheck()
@@ -45,7 +45,7 @@ export default function WithdrawModal() {
 
   useEffect(()=>{
     const tooManyDecimalsCheck = () => {
-      const tooManyDecimalMessage = tooManyDecimals(amount, vault_.decimals)
+      const tooManyDecimalMessage = tooManyDecimals(amount!, vault_.decimals)
       setTooManyDecimalsMessage(tooManyDecimalMessage!)
     }
     tooManyDecimalsCheck()
@@ -57,11 +57,11 @@ export default function WithdrawModal() {
         <Text style={styles.title}>Withdraw from {vault_.prizeName} on Optimism</Text>
       </View>
 
-      <WithdrawDex vault={JSON.parse(vault.toLocaleString())} amount={amount} setAmount={setAmount} reviewed={reviewed}  balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
+      <WithdrawDex vault={JSON.parse(vault.toLocaleString())} amount={amount!} setAmount={setAmount} reviewed={reviewed}  balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
       
       <WithdrawEstimate/>
       
-      <WithdrawSwap vault={JSON.parse(vault.toLocaleString())} amount={amount} reviewed={reviewed} setReview={setReview} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
+      <WithdrawSwap vault={JSON.parse(vault.toLocaleString())} amount={amount!} setAmount={setAmount} reviewed={reviewed} setReview={setReview} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
     </SafeAreaView>
   );
 }

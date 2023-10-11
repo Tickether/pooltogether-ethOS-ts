@@ -3,6 +3,7 @@ import { poolABI } from '../abis/poolABI'
 import { getAddress } from './getAddress'
 import * as ExpoWalletsdk from 'expo-walletsdk'
 import { parseUnits } from 'viem'
+import { isHex } from 'viem'
 
 
 export const leavePool = async (contract: string, amount: string, decimals: number) => {
@@ -21,9 +22,17 @@ export const leavePool = async (contract: string, amount: string, decimals: numb
             chainRPCUrl: 'https://mainnet.optimism.io'
         };
         try {
-            const txHash = ExpoWalletsdk.sendTransaction(transaction);
-            console.log(txHash)
-            return txHash
+            const res = ExpoWalletsdk.sendTransaction(transaction);
+            if (isHex(res)) {
+                const txHash = res
+                return txHash
+            } else {
+                const message = res
+                return message
+            }
+            //console.log()
+            //console.log()
+            //return isHex(txHash) ? txHash : null
         } catch (error) {
             console.log(error)
         }

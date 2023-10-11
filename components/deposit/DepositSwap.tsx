@@ -8,10 +8,14 @@ import { approveSwimSesh } from '../../utilities/utils/approveSwimSesh';
 import { useEffect, useState } from 'react';
 import { goSwimming } from '../../utilities/utils/goSwimming';
 import { checkSwimmable } from '../../utilities/utils/checkSwimmable';
+import Swimming from './Swimming';
+import SwimError from './SwimError';
+import { isHex } from 'viem';
 
 interface DepositSwapProps {
   vault: VaultProps,
-  amount: string
+  amount: string | null,
+  setAmount: (amount: string | null) => void
   reviewed: boolean | null // 'reviewed' prop
   setReview: (reviewed: boolean | null) => void // 'setReview' prop
   balanceMessage: string | null
@@ -19,14 +23,25 @@ interface DepositSwapProps {
   tooManyDecimalsMessage: string | null // 'tooManyDecimalsMessage' prop
 }
 
-export default function DepositSwap({ vault, amount, reviewed, setReview, balanceMessage, amountNotValidMessage, tooManyDecimalsMessage } : DepositSwapProps) {
+export default function DepositSwap({ vault, amount, setAmount, reviewed, setReview, balanceMessage, amountNotValidMessage, tooManyDecimalsMessage } : DepositSwapProps) {
   //edit setting to as seen a cabana.fi
   const [hash, setHash] = useState<string | null>(null)
+  const [message, setMessage] = useState<string | null>(null)
   const [swimmable, setSwimmable] = useState<boolean>(false)
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [openError, setOpenError] = useState<boolean>(false)
 
   const goingSwimming = async () => {
-    const txn = await goSwimming(vault.prizeAsset, amount, vault.decimals)
-    setHash(txn)
+    //loading ux? on withdraw button until pop
+    const res = await goSwimming(vault.prizeAsset, amount!, vault.decimals)
+    if (isHex(res)) {
+      setHash(res!)
+      setOpenModal(true)
+    }
+    if (!isHex(res)) {
+      setMessage(res)
+      setOpenError(true)
+    }
   }
 
 
@@ -34,7 +49,7 @@ export default function DepositSwap({ vault, amount, reviewed, setReview, balanc
     
     const checkSwimming = async () => {
       setReview(null)
-      const canSwim = await checkSwimmable(vault.prizeAsset, vault.decimals, amount)
+      const canSwim = await checkSwimmable(vault.prizeAsset, vault.decimals, amount!)
       if(canSwim){setReview(false)}
       setSwimmable(canSwim)
     } 
@@ -61,7 +76,7 @@ export default function DepositSwap({ vault, amount, reviewed, setReview, balanc
                   <View style={styles.approveAmount}>
                     <TouchableOpacity
                       style={styles.approveAmountAction}
-                      onPress={()=> approveSwimSesh(vault.depositAsset, vault.prizeAsset, amount, vault.decimals)}//fix amount with prop
+                      onPress={()=> approveSwimSesh(vault.depositAsset, vault.prizeAsset, amount!, vault.decimals)}//fix amount with prop
                     >
                       <Text style={styles.approveText}>Approve exact amount of {vault.depositSymbol}</Text>
                     </TouchableOpacity>
@@ -106,6 +121,8 @@ export default function DepositSwap({ vault, amount, reviewed, setReview, balanc
           </View>
         )
       }
+      <Swimming vault={vault} amount={amount!} hash={hash!} openModal={openModal} setOpenModal={setOpenModal}/>
+      <SwimError message={message!} setAmount={setAmount} setReview={setReview} openError={openError} setOpenError={setOpenError}/>
     </View>
   );
 }

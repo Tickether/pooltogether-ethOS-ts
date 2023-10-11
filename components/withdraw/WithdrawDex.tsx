@@ -65,12 +65,12 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanc
                   )
                 }
                 {
-                  amountNotValidMessage! && (
+                  amountNotValidMessage! && amount! && (
                     <Text style={styles.error}>{amountNotValidMessage}</Text>
                   )
                 }
                 {
-                  tooManyDecimalsMessage! && (
+                  tooManyDecimalsMessage! && !balanceMessage && (
                     <Text style={styles.error}>{tooManyDecimalsMessage}</Text>
                   )
                 }

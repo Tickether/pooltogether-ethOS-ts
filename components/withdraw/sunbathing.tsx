@@ -33,7 +33,10 @@ export default function Sunbathing({ vault, amount, hash } : SunbathingProps) {
                 {isConfirming == false && (
                     <View style={styles.image}></View>
                 )}    
-                <TouchableOpacity style={styles.account}>
+                <TouchableOpacity 
+                    style={styles.account}
+                    onPress={() => setOpenModal(!openModal)}
+                >
                     <Link href={{pathname: "/account"}}><Text style={styles.viewAccount}>View Account</Text></Link>
                 </TouchableOpacity>
             </View>

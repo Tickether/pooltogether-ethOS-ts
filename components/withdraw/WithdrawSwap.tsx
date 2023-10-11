@@ -19,8 +19,13 @@ interface WithdrawSwapProps {
 
 export default function WithdrawSwap({ vault, amount, reviewed, setReview, balanceMessage, amountNotValidMessage, tooManyDecimalsMessage } : WithdrawSwapProps) {
   //edit setting to as seen a cabana.fi
-  //const [reviewed, setReview] = useState<boolean>(false)
+  const [hash, setHash] = useState<string | null>(null)
   //const [swimmable, setSwimmable] = useState<boolean>(false)
+
+  const leavingPool = async () => {
+    const txn = await leavePool(vault.prizeAsset, amount, vault.decimals)
+    setHash(txn)
+  }
 
   return (
     <View style={styles.container}>
@@ -49,7 +54,7 @@ export default function WithdrawSwap({ vault, amount, reviewed, setReview, balan
               <View style={styles.withdraw}>
                 <TouchableOpacity
                   style={styles.withdrawAction}
-                  onPress={()=>{ leavePool(vault.prizeAsset, amount, vault.decimals)}}
+                  onPress={()=>{ leavingPool()}}
                 >
                   <Text style={styles.withdrawText}>Withdraw</Text>
                 </TouchableOpacity>

@@ -21,9 +21,13 @@ interface DepositSwapProps {
 
 export default function DepositSwap({ vault, amount, reviewed, setReview, balanceMessage, amountNotValidMessage, tooManyDecimalsMessage } : DepositSwapProps) {
   //edit setting to as seen a cabana.fi
-  //const [reviewed, setReview] = useState<boolean | null>(null)
+  const [hash, setHash] = useState<string | null>(null)
   const [swimmable, setSwimmable] = useState<boolean>(false)
 
+  const goingSwimming = async () => {
+    const txn = await goSwimming(vault.prizeAsset, amount, vault.decimals)
+    setHash(txn)
+  }
 
 
   useEffect(()=>{
@@ -89,7 +93,7 @@ export default function DepositSwap({ vault, amount, reviewed, setReview, balanc
                     <View style={styles.deposit}>
                       <TouchableOpacity
                         style={styles.depositAction}
-                        onPress={()=>{ goSwimming(vault.prizeAsset, amount, vault.decimals)}}
+                        onPress={()=>{ goingSwimming()}}
                       >
                         <Text style={styles.depositText}>Deposit</Text>
                       </TouchableOpacity>

@@ -5,15 +5,19 @@ import { formatUnits } from 'viem'
 
 
 export const getBalance = async (contract: string, decimals: number) =>{
-    const owner = getAddress()
-    const balanceOf = await publicClient.readContract({
-        address: `0x${contract.slice(2)}`,
-        abi: erc20ABI,
-        functionName: 'balanceOf',
-        args:[(`0x${owner.slice(2)}`)],
-    })
+    try {
+        const owner = getAddress()
+        const balanceOf = await publicClient.readContract({
+            address: `0x${contract.slice(2)}`,
+            abi: erc20ABI,
+            functionName: 'balanceOf',
+            args:[(`0x${owner.slice(2)}`)],
+        })
 
-    const balance = Number(formatUnits(BigInt(String(balanceOf)), decimals))
+        const balance = Number(formatUnits(BigInt(String(balanceOf)), decimals))
 
-    return balance.toFixed(2)
+        return balance.toFixed(2)
+    } catch (error) {
+        console.log(error)   
+    }
 }

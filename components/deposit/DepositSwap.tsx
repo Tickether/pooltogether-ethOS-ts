@@ -74,7 +74,7 @@ export default function DepositSwap({ vault, amount, setAmount, reviewed, setRev
       //1setReview(null)
       const canSwim = await checkSwimmable(vault.depositAsset, vault.prizeAsset, vault.decimals, amount!)
       if(canSwim){setReview(false)}
-      setSwimmable(canSwim)
+      setSwimmable(canSwim!)
     } 
     checkSwimming()
   },[amount, !approved])

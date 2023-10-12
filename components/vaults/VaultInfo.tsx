@@ -19,8 +19,8 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
   const [prizeBalanace, setPrizeBalance] = useState<string>('0.00')
   const [totalAssets, setTotalAssets] = useState<string>(`0.00`)
 
-  const prevPrizeBalanace = useRef<string | null>(null); 
-  const prevTotalDeposits  = useRef<string | null>(null); 
+  const prevPrizeBalanace = useRef<string | undefined>(undefined); 
+  const prevTotalDeposits  = useRef<string | undefined>(undefined); 
 
   useEffect(()=>{
     let getBalanceTimeOut : NodeJS.Timeout
@@ -28,8 +28,8 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
       
       const PrizeBalance = await getBalance(vault.prizeAsset, vault.decimals)
       if (PrizeBalance !== prevPrizeBalanace.current) {
-        setPrizeBalance((PrizeBalance))
-        prevPrizeBalanace.current = PrizeBalance; // Update the reference variable
+        setPrizeBalance((PrizeBalance!))
+        prevPrizeBalanace!.current = PrizeBalance; // Update the reference variable
       }
       getBalanceTimeOut = setTimeout(getBalance_, 3000);
     }
@@ -42,8 +42,8 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
     const getTotalAssets = async () => {
       const totalDeposits = await getTotalDeposits(vault.prizeAsset, vault.decimals)
       if (totalDeposits !== prevTotalDeposits.current) {
-        setTotalAssets(totalDeposits);
-        prevTotalDeposits.current = totalDeposits; // Update the reference variable
+        setTotalAssets(totalDeposits!);
+        prevTotalDeposits!.current = totalDeposits; // Update the reference variable
       }
       getTotalAssetsTimeOut = setTimeout(getTotalAssets, 3000);
     }

@@ -1,5 +1,6 @@
 import { StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { Text, View } from '../Themed';
+import { ErrorPool } from '../../constants/Icons';
 
 
 
@@ -26,7 +27,7 @@ export default function SwimError({ message, setAmount, setReview, openError, se
                 <View style={styles.modal}>
                     <Text style={styles.caption}>Uh oh!</Text>
                     <Text style={styles.info}>Something went wrong... {message}</Text>
-                    <View style={styles.image}></View>  
+                    <ErrorPool/>  
                     <TouchableOpacity 
                         style={styles.try}
                         onPress={() => {
@@ -48,24 +49,37 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    width: '100%'
   },
   modal: {
     backgroundColor: '#4C249F',
+    width: '100%',
     alignItems: 'center',
+    padding: 20,
+    gap: 20,
   },
   caption: {
-    
+    color: '#EA8686',
+    fontSize: 23,
+    fontWeight: 'bold'
   },
   info: {
-    
-  },
-  image:{
-
+    fontSize: 17,
+    fontWeight: 'bold'
   },
   try: {
-    
+    width: '100%',
+    backgroundColor: '#5D38A9',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#6C4BB1',
+    borderRadius: 10, 
+    paddingTop: 10, 
+    paddingBottom: 10,
   },
   tryAgain: {
-    
+    color: '#DECEFF',
+    fontSize: 17,
+    fontWeight: '600'
   },
 });

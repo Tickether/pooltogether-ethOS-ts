@@ -4,7 +4,7 @@ import { Text, View } from '../Themed';
 import { Link } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import { VaultProps } from '../../constants/Vaults';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { getBalance } from '../../utilities/utils/getBalance';
 import { getTotalDeposits } from '../../utilities/utils/getTotalDeposits';
 
@@ -19,19 +19,36 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
   const [prizeBalanace, setPrizeBalance] = useState<string>('0.00')
   const [totalAssets, setTotalAssets] = useState<string>(`0.00`)
 
+  const prevPrizeBalanace = useRef<string | null>(null); 
+  const prevTotalDeposits  = useRef<string | null>(null); 
+
   useEffect(()=>{
+    let getBalanceTimeOut : NodeJS.Timeout
     const getBalance_ = async () => {
+      
       const PrizeBalance = await getBalance(vault.prizeAsset, vault.decimals)
-      setPrizeBalance((PrizeBalance))
+      if (PrizeBalance !== prevPrizeBalanace.current) {
+        setPrizeBalance((PrizeBalance))
+        prevPrizeBalanace.current = PrizeBalance; // Update the reference variable
+      }
+      getBalanceTimeOut = setTimeout(getBalance_, 3000);
     }
     getBalance_()
+    return () => clearTimeout(getBalanceTimeOut);
   },[])
+
   useEffect(()=>{
+    let getTotalAssetsTimeOut : NodeJS.Timeout
     const getTotalAssets = async () => {
       const totalDeposits = await getTotalDeposits(vault.prizeAsset, vault.decimals)
-      setTotalAssets((totalDeposits))
+      if (totalDeposits !== prevTotalDeposits.current) {
+        setTotalAssets(totalDeposits);
+        prevTotalDeposits.current = totalDeposits; // Update the reference variable
+      }
+      getTotalAssetsTimeOut = setTimeout(getTotalAssets, 3000);
     }
     getTotalAssets()
+    return () => clearTimeout(getTotalAssetsTimeOut);
   },[])
 
   return (

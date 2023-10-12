@@ -1,4 +1,4 @@
-import { encodeFunctionData } from 'viem'
+import { encodeFunctionData, isHex } from 'viem'
 import { erc20ABI } from '../abis/erc20ABI'
 import * as ExpoWalletsdk from 'expo-walletsdk'
 import { parseUnits } from 'viem'
@@ -19,8 +19,14 @@ export const approveSwimSesh = (targetContract: string, spendContract: string, a
             chainRPCUrl: 'https://mainnet.optimism.io'
         };
         try {
-            const txHash = ExpoWalletsdk.sendTransaction(transaction);
-            console.log(txHash)
+            const res = ExpoWalletsdk.sendTransaction(transaction);
+            if (isHex(res)) {
+                const txHash = res
+                return txHash
+            } else {
+                const message = res
+                return message
+            }
         } catch (error) {
             console.log(error)
         }

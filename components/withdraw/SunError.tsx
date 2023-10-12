@@ -1,5 +1,6 @@
 import { StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { Text, View } from '../Themed';
+import { ErrorPool } from '../../constants/Icons';
 
 
 interface SunErrorProps {
@@ -25,7 +26,7 @@ export default function SunError({ message, setAmount, setReview, openError, set
                 <View style={styles.modal}>
                     <Text style={styles.caption}>Uh oh!</Text>
                     <Text style={styles.info}>Something went wrong... {message}</Text>
-                    <View style={styles.image}></View>  
+                    <ErrorPool/>  
                     <TouchableOpacity 
                         style={styles.try}
                         onPress={() => {
@@ -51,20 +52,31 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: '#4C249F',
     alignItems: 'center',
+    padding: 20,
+    gap: 20,
   },
   caption: {
-    
+    color: '#EA8686',
+    fontSize: 23,
+    fontWeight: 'bold'
   },
   info: {
-    
-  },
-  image:{
-
+    fontSize: 17,
+    fontWeight: 'bold'
   },
   try: {
-    
+    width: '100%',
+    backgroundColor: '#5D38A9',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#6C4BB1',
+    borderRadius: 10, 
+    paddingTop: 10, 
+    paddingBottom: 10,
   },
   tryAgain: {
-    
+    color: '#DECEFF',
+    fontSize: 17,
+    fontWeight: '600'
   },
 });

@@ -11,6 +11,7 @@ import { checkSwimmable } from '../../utilities/utils/checkSwimmable';
 import Swimming from './Swimming';
 import SwimError from './SwimError';
 import { isHex } from 'viem';
+import { getConfirmed } from '../../utilities/utils/getConfirmed';
 
 interface DepositSwapProps {
   vault: VaultProps,
@@ -30,6 +31,8 @@ export default function DepositSwap({ vault, amount, setAmount, reviewed, setRev
   const [swimmable, setSwimmable] = useState<boolean>(false)
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openError, setOpenError] = useState<boolean>(false)
+  const [approved, setApproved] = useState<boolean>(false)
+  //const [confirmed, setConfirmed] = useState<boolean | null>(null)
 
   const goingSwimming = async () => {
     //loading ux? on withdraw button until pop
@@ -44,18 +47,50 @@ export default function DepositSwap({ vault, amount, setAmount, reviewed, setRev
     }
   }
 
+  const approvingSwimSesh = async (_amount: string) => {
+    
+    let approving
+    if (_amount == amount) {
+      approving = approveSwimSesh(vault.depositAsset, vault.prizeAsset, _amount, vault.decimals)
+    } else {
+      approving = approveSwimSesh(vault.depositAsset, vault.prizeAsset, '0', vault.decimals)
+    }
+    if (isHex(approving)) {
+      const _approved = await getConfirmed(`0x${approving.slice(2)}`)
+        if (_approved) {
+          setApproved(true)
+        }
+    }
+    if (!isHex(approving)) {
+      setMessage(approving)
+      setOpenError(true)
+    }
+  }
+
 
   useEffect(()=>{
     
     const checkSwimming = async () => {
-      setReview(null)
-      const canSwim = await checkSwimmable(vault.prizeAsset, vault.decimals, amount!)
+      //1setReview(null)
+      const canSwim = await checkSwimmable(vault.depositAsset, vault.prizeAsset, vault.decimals, amount!)
       if(canSwim){setReview(false)}
       setSwimmable(canSwim)
     } 
     checkSwimming()
-  },[amount])
-  //console.log(swimmable)
+  },[amount, !approved])
+
+  /*
+  useEffect(()=>{
+    const getConfirms = async () =>{
+        const confirm = await getConfirmations(`0x${hash!.slice(2)}`)
+        if (confirm) {
+            setConfirmed(true)
+        }
+    }
+    getConfirms
+  },[])
+  */
+  console.log(swimmable)
   return (
     <View style={styles.container}>
       {
@@ -70,13 +105,13 @@ export default function DepositSwap({ vault, amount, setAmount, reviewed, setRev
         :(
           <View style={styles.swimmable}>
             {
-              !swimmable 
-              ?(
+              !swimmable &&
+              (
                 <View style={styles.approve}>
                   <View style={styles.approveAmount}>
                     <TouchableOpacity
                       style={styles.approveAmountAction}
-                      onPress={()=> approveSwimSesh(vault.depositAsset, vault.prizeAsset, amount!, vault.decimals)}//fix amount with prop
+                      onPress={()=> approvingSwimSesh(amount!)}//fix amount with prop
                     >
                       <Text style={styles.approveText}>Approve exact amount of {vault.depositSymbol}</Text>
                     </TouchableOpacity>
@@ -84,16 +119,18 @@ export default function DepositSwap({ vault, amount, setAmount, reviewed, setRev
                   <View style={styles.approveUnlimited}>
                     <TouchableOpacity
                       style={styles.approveUnlimitedAction}
-                      onPress={()=> approveSwimSesh(vault.depositAsset, vault.prizeAsset, '999999999999', vault.decimals)}// static unlimted approvall
+                      onPress={()=> approvingSwimSesh('0')}// static unlimted approvall
                     >
                       <Text style={styles.unlimtedText}>Approve unlimited amount of {vault.depositSymbol}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
               ) 
-              :(
+            }
+            {
+              swimmable && 
+              (
                 <View style={styles.actions}>
-                  
                   {reviewed == false && (
                     <View style={styles.review}>
                       <TouchableOpacity
@@ -118,6 +155,7 @@ export default function DepositSwap({ vault, amount, setAmount, reviewed, setRev
                 </View>
               )
             }
+          
           </View>
         )
       }

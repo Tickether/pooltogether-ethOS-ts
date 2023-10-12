@@ -55,10 +55,10 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanc
                   style={styles.input}
                   placeholder='0'
                   keyboardType="numeric"
-                  value={amount!}
+                  value={amount! ? amount : ''}
                   onChangeText={setAmount}
                 />
-                <Text style={styles.bottomText}>${amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                <Text style={styles.bottomText}>${amount! ? amount : '0.00'}{/**pass number of tokens thru cypro price coversion*/}</Text>
                 {
                   balanceMessage! && (
                     <Text style={styles.error}>{balanceMessage}</Text>
@@ -93,10 +93,10 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanc
                   style={styles.input}
                   placeholder='0'
                   keyboardType="numeric"
-                  value={amount!}
+                  value={amount! ? amount : ''}
                   onChangeText={setAmount}
                 />
-                <Text style={styles.bottomText}>${amount!}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                <Text style={styles.bottomText}>${amount! ? amount : '0.00'}{/**pass number of tokens thru cypro price coversion*/}</Text>
               </View>
               <View style={styles.balance}>
                 <Text style={styles.topText}>{vault.depositSymbol}</Text>

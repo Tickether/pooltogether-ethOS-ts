@@ -27,9 +27,9 @@ export default function DepositDex({ vault, amount, setAmount, reviewed, balance
  useEffect(()=>{
   const getBalances = async () => {
     const AssetBalance = await getBalance(vault.depositAsset, vault.decimals)
-    setAssetBalance(AssetBalance)
+    setAssetBalance(AssetBalance!)
     const PrizeBalance = await getBalance(vault.prizeAsset, vault.decimals)
-    setPrizeBalance((PrizeBalance))
+    setPrizeBalance((PrizeBalance!))
   }
   getBalances()
  })

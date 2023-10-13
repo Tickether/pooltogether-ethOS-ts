@@ -9,11 +9,8 @@ export default function PoolWinnings() {
   // https://gov.pooltogether.com/t/v5-private-beta-launch-information/3021
   return (
     <View style={styles.container}>
-        <View></View>
-
-        <View></View>
-        
-        <View></View>    
+        <Text style={styles.title}>Your Winnings</Text>
+        <Text style={styles.amount}>${'0.00'}</Text>
     </View>
   );
 }
@@ -21,18 +18,16 @@ export default function PoolWinnings() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
     gap: 5,
     alignItems: 'center',
-    justifytitleContent: 'center',
+    backgroundColor: '#21064E',
   },
-  version: {
- 
-  },
+
   title: {
-   
+    fontSize: 17
   },
-  icon: {
-    
+  amount: {
+    fontSize: 30,
+    fontWeight: '900'
   },
 });

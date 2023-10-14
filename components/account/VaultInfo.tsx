@@ -39,7 +39,7 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
   return (
     <>
     {
-      prizeBalanace != '0.00' || prizeBalanace != null && (
+      prizeBalanace != '0.00' && prizeBalanace != null && (
         <View style={styles.container}>
       
           <View style={styles.top}>

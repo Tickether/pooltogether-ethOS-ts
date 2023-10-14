@@ -30,7 +30,7 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
         setPrizeBalance((PrizeBalance!))
         prevPrizeBalanace!.current = PrizeBalance; // Update the reference variable
       }
-      getBalanceTimeOut = setTimeout(getBalance_, 3000);
+      getBalanceTimeOut = setTimeout(getBalance_, 6000);
     }
     getBalance_()
     return () => clearTimeout(getBalanceTimeOut);
@@ -39,11 +39,11 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
   return (
     <>
     {
-      prizeBalanace != '0.00' && (
+      prizeBalanace != '0.00' || prizeBalanace != null && (
         <View style={styles.container}>
       
           <View style={styles.top}>
-              <Link href="/vault">
+              <Link href={{pathname: "/vault", params: { vault: JSON.stringify(vault)}}}>
                 <View style={styles.caption}>
                   <Text style={styles.name}>{vault.prizeName}</Text>
                   <Text style={styles.symbol}>{vault.prizeSymbol}</Text>

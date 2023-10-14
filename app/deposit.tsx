@@ -56,7 +56,7 @@ export default function DepositModal() {
       <View>
         <Text style={styles.title}>Deposit to {vault_.prizeName} on Optimism</Text>
       </View>
-      <DepositDex vault={JSON.parse(vault.toLocaleString())} amount={amount!} setAmount={setAmount} reviewed={reviewed} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
+      <DepositDex vault={vault_} amount={amount!} setAmount={setAmount} reviewed={reviewed} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
       {
         amount == null
         ?(
@@ -67,7 +67,7 @@ export default function DepositModal() {
         )
       }
       
-      <DepositSwap vault={JSON.parse(vault.toLocaleString())} amount={amount!} reviewed={reviewed} setAmount={setAmount} setReview={setReview} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
+      <DepositSwap vault={vault_} amount={amount!} reviewed={reviewed} setAmount={setAmount} setReview={setReview} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
     </SafeAreaView>
   );
 }

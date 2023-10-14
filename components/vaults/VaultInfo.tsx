@@ -31,7 +31,7 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
         setPrizeBalance((PrizeBalance!))
         prevPrizeBalanace!.current = PrizeBalance; // Update the reference variable
       }
-      getBalanceTimeOut = setTimeout(getBalance_, 3000);
+      getBalanceTimeOut = setTimeout(getBalance_, 6000);
     }
     getBalance_()
     return () => clearTimeout(getBalanceTimeOut);
@@ -45,7 +45,7 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
         setTotalAssets(totalDeposits!);
         prevTotalDeposits!.current = totalDeposits; // Update the reference variable
       }
-      getTotalAssetsTimeOut = setTimeout(getTotalAssets, 3000);
+      getTotalAssetsTimeOut = setTimeout(getTotalAssets, 6000);
     }
     getTotalAssets()
     return () => clearTimeout(getTotalAssetsTimeOut);
@@ -55,7 +55,7 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
     <View style={styles.container}>
       
       <View style={styles.top}>
-          <Link href="/vault">
+          <Link href={{pathname: "/vault", params: { vault: JSON.stringify(vault)}}}>
             <View style={styles.caption}>
               <Text style={styles.name}>{vault.prizeName}</Text>
               <Text style={styles.symbol}>{vault.prizeSymbol}</Text>

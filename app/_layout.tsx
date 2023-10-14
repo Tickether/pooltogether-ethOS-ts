@@ -52,6 +52,7 @@ function RootLayoutNav() {
         <Stack.Screen name="settings" options={{ presentation: 'modal', headerTitle:''}} />
         <Stack.Screen name="deposit" options={{ presentation: 'modal', headerTitle:''}} />
         <Stack.Screen name="withdraw" options={{ presentation: 'modal', headerTitle:''}} />
+        <Stack.Screen name="vault" options={{ presentation: 'modal', headerTitle:''}} />
       </Stack>
     </ThemeProvider>
   );

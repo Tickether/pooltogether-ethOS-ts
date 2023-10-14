@@ -57,11 +57,11 @@ export default function WithdrawModal() {
         <Text style={styles.title}>Withdraw from {vault_.prizeName} on Optimism</Text>
       </View>
 
-      <WithdrawDex vault={JSON.parse(vault.toLocaleString())} amount={amount!} setAmount={setAmount} reviewed={reviewed}  balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
+      <WithdrawDex vault={vault_} amount={amount!} setAmount={setAmount} reviewed={reviewed}  balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
       
       <WithdrawEstimate/>
       
-      <WithdrawSwap vault={JSON.parse(vault.toLocaleString())} amount={amount!} setAmount={setAmount} reviewed={reviewed} setReview={setReview} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
+      <WithdrawSwap vault={vault_} amount={amount!} setAmount={setAmount} reviewed={reviewed} setReview={setReview} balanceMessage={balanceMessage} amountNotValidMessage={amountNotValidMessage} tooManyDecimalsMessage={tooManyDecimalsMessage} />
     </SafeAreaView>
   );
 }

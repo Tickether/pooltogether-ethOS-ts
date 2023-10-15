@@ -10,14 +10,16 @@ export interface VaultProps {
     decimals: number
     depositAsset : string
     prizeAsset: string
+    network: string
 }
 const PrizeUDSC : VaultProps =  {
     depositSymbol: 'USDC',
-    depositAsset: '0x7F5c764cBc14f9669B88837ca1490cCa17c31607',
+    depositAsset: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
     prizeName: 'Prize USDC',
     prizeSymbol: 'PTUSDC',
     prizeAsset: '0x31515cfC4550d9C83E2d86E8a352886d1364E2D9',
     decimals: 6,
+    network: 'optimistic-ethereum'
     
 }
 const PrizeWETH : VaultProps =  {
@@ -27,6 +29,8 @@ const PrizeWETH : VaultProps =  {
     prizeSymbol: 'PTWETH',
     prizeAsset: '0x1732Ce5486ea47f607550Ccbe499cd0f894E0494',
     decimals: 18,
+    network: 'optimistic-ethereum'
+
 }
 
 export const defaultVaults = {

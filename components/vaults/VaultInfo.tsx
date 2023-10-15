@@ -7,6 +7,7 @@ import { VaultProps } from '../../constants/Vaults';
 import { useEffect, useState, useRef } from 'react';
 import { getBalance } from '../../utilities/utils/getBalance';
 import { getTotalDeposits } from '../../utilities/utils/getTotalDeposits';
+import { getTokenUSD } from '../../utilities/utils/getTokenUSD';
 
 interface VaultInfoProps {
   vault: VaultProps,
@@ -18,11 +19,12 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
   // calculate price power and balance : pref from utils fuction
   const [prizeBalanace, setPrizeBalance] = useState<string>('0.00')
   const [totalAssets, setTotalAssets] = useState<string>(`0.00`)
+  const [tokenRateUSD, setTokenRateUSD] = useState<number | null>(null)
 
   const prevPrizeBalanace = useRef<string | undefined>(undefined); 
-  const prevTotalDeposits  = useRef<string | undefined>(undefined); 
+  const prevTotalAssets  = useRef<string | undefined>(undefined); 
 
-  useEffect(()=>{
+  useEffect(()=> {
     let getBalanceTimeOut : NodeJS.Timeout
     const getBalance_ = async () => {
       
@@ -37,18 +39,26 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
     return () => clearTimeout(getBalanceTimeOut);
   },[])
 
-  useEffect(()=>{
+  useEffect(()=> {
     let getTotalAssetsTimeOut : NodeJS.Timeout
     const getTotalAssets = async () => {
-      const totalDeposits = await getTotalDeposits(vault.prizeAsset, vault.decimals)
-      if (totalDeposits !== prevTotalDeposits.current) {
-        setTotalAssets(totalDeposits!);
-        prevTotalDeposits!.current = totalDeposits; // Update the reference variable
+      const TotalAssets = await getTotalDeposits(vault.prizeAsset, vault.decimals)
+      if (TotalAssets !== prevTotalAssets.current) {
+        setTotalAssets(TotalAssets!);
+        prevTotalAssets!.current = TotalAssets; // Update the reference variable
       }
       getTotalAssetsTimeOut = setTimeout(getTotalAssets, 6000);
     }
     getTotalAssets()
     return () => clearTimeout(getTotalAssetsTimeOut);
+  },[])
+
+  useEffect(()=> {
+    const getTokenRateUSD = async () => {
+      const TokenRateUSD =await getTokenUSD(vault.network, vault.depositAsset)
+      setTokenRateUSD(TokenRateUSD!)
+    }
+    getTokenRateUSD()
   },[])
 
   return (

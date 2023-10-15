@@ -61,6 +61,9 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
     getTokenRateUSD()
   },[])
 
+  const prizeBalanaceUSD = (tokenRateUSD! * Number(prizeBalanace)).toFixed(2)
+  const totalAssetsUSD = (tokenRateUSD! * Number(totalAssets)).toFixed(2)
+
   return (
     <View style={styles.container}>
       
@@ -78,9 +81,12 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
           prizeBalanace != '0.00' && (
             <View style={styles.balance}>
               
-              <Text style={styles.title}>Balance</Text>
+              <Text style={styles.title}>Your Balance</Text>
             
-              <Text style={styles.title}>{prizeBalanace} {vault.depositSymbol}</Text>
+              <View style={styles.balance}>
+                <Text>${prizeBalanaceUSD}</Text>
+                <Text style={styles.title}>{prizeBalanace} {vault.depositSymbol}</Text>
+              </View>
             
             </View>
           )
@@ -101,7 +107,10 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
         <View style={styles.total}>
          
           <Text style={styles.title}>Total Deposits</Text>
-          <Text>{totalAssets} {vault.depositSymbol}</Text>
+          <View style={styles.total}>
+            <Text>${totalAssetsUSD}</Text>
+            <Text style={styles.title}>{totalAssets} {vault.depositSymbol}</Text>
+          </View>
           
         </View>
       </View>
@@ -225,6 +234,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#371D60',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    gap: 5
   },
   power: {
     backgroundColor: '#371D60',
@@ -244,6 +254,7 @@ const styles = StyleSheet.create({
   total: {
     backgroundColor: '#371D60',
     justifyContent: 'space-between',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    gap: 5
   },
 });

@@ -6,6 +6,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { VaultProps } from '../../constants/Vaults';
 import { useEffect, useState, useRef } from 'react';
 import { getBalance } from '../../utilities/utils/getBalance';
+import { getTokenUSD } from '../../utilities/utils/getTokenUSD';
 
 interface VaultInfoProps {
   vault: VaultProps,
@@ -16,6 +17,7 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
   // display vault with deposit button
   // calculate price power and balance : pref from utils fuction
   const [prizeBalanace, setPrizeBalance] = useState<string>('0.00')
+  const [tokenRateUSD, setTokenRateUSD] = useState<number | null>(null)
   //const [totalAssets, setTotalAssets] = useState<string>(`0.00`)
 
   const prevPrizeBalanace = useRef<string | undefined>(undefined); 
@@ -36,6 +38,16 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
     return () => clearTimeout(getBalanceTimeOut);
   },[])
 
+  useEffect(()=> {
+    const getTokenRateUSD = async () => {
+      const TokenRateUSD =await getTokenUSD(vault.network, vault.depositAsset)
+      setTokenRateUSD(TokenRateUSD!)
+    }
+    getTokenRateUSD()
+  },[])
+
+  const prizeBalanaceUSD = (tokenRateUSD! * Number(prizeBalanace)).toFixed(2)
+
   return (
     <>
     {
@@ -54,13 +66,16 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
           <View style={styles.mid}>
             
             <View style={styles.balance}>
-              <Text style={styles.title}>Balance</Text>
-              <Text style={styles.title}>{prizeBalanace} {vault.depositSymbol}</Text>
+              <Text style={styles.title}>Your Balance</Text>
+              <View style={styles.balance}>
+                <Text>${prizeBalanaceUSD}</Text>
+                <Text style={styles.title}>{prizeBalanace} {vault.depositSymbol}</Text>
+              </View>
             </View>
             
             <View style={styles.power}>
               <View style={styles.left}>
-                <Text style={styles.title}>Your winning Power</Text>
+                <Text style={styles.title}>Your Win Chance</Text>
                 <FontAwesome
                   name="info-circle"
                   size={16}
@@ -68,7 +83,7 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
                 />
               </View>
               <View style={styles.right}>
-                <Text>88.77%</Text>
+                <Text>1 in 3,530</Text>
               </View>
             </View>
 
@@ -181,6 +196,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#371D60',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    gap: 5
   },
   power: {
     backgroundColor: '#371D60',

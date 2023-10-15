@@ -9,8 +9,8 @@ export const getTotalDeposits = async (contract: string, decimals: number) => {
             abi: poolABI,
             functionName: 'totalAssets',
         })
-        const totalDeposits = formatUnits(BigInt(String(totalAssets)), decimals)
-        return totalDeposits
+        const totalDeposits = Number(formatUnits(BigInt(String(totalAssets)), decimals))
+        return totalDeposits.toFixed(2)
     } catch (error) {
         console.log(error)   
     }

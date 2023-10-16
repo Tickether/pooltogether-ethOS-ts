@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { VaultProps } from '../../constants/Vaults';
 import { getBalance } from '../../utilities/utils/getBalance';
 import { checkBalance } from '../../utilities/utils/checkBalance';
+import { getTokenUSD } from '../../utilities/utils/getTokenUSD';
 
 interface WithdrawDexProps {
   vault: VaultProps,
@@ -25,6 +26,7 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanc
   // balance of prize
   const [assetBalanace, setAssetBalance] = useState<string>('0')
   const [prizeBalanace, setPrizeBalance] = useState<string>('0')
+  const [tokenRateUSD, setTokenRateUSD] = useState<number | null>(null)
   
   
 
@@ -40,7 +42,17 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanc
 
   const MaxBid = () => {
     setAmount(prizeBalanace)
-   }
+  }
+
+  useEffect(()=> {
+    const getTokenRateUSD = async () => {
+      const TokenRateUSD =await getTokenUSD(vault.network, vault.depositAsset)
+      setTokenRateUSD(TokenRateUSD!)
+    }
+  getTokenRateUSD()
+  },[])
+
+  const amountUSD = (tokenRateUSD! * Number(amount)).toFixed(2)
 
 
   return (
@@ -58,7 +70,7 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanc
                   value={amount! ? amount : ''}
                   onChangeText={setAmount}
                 />
-                <Text style={styles.bottomText}>${amount! ? amount : '0.00'}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                <Text style={styles.bottomText}>${amount! ? amountUSD : '0.00'}{/**pass number of tokens thru cypro price coversion*/}</Text>
                 {
                   balanceMessage! && (
                     <Text style={styles.error}>{balanceMessage}</Text>
@@ -96,7 +108,7 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanc
                   value={amount! ? amount : ''}
                   onChangeText={setAmount}
                 />
-                <Text style={styles.bottomText}>${amount! ? amount : '0.00'}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                <Text style={styles.bottomText}>${amount! ? amountUSD : '0.00'}{/**pass number of tokens thru cypro price coversion*/}</Text>
               </View>
               <View style={styles.balance}>
                 <Text style={styles.topText}>{vault.depositSymbol}</Text>

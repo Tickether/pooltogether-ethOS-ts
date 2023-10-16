@@ -9,6 +9,7 @@ import { useEffect, useState, useRef } from 'react';
 import { getBalance } from '../../../utilities/utils/getBalance';
 import { getTotalDeposits } from '../../../utilities/utils/getTotalDeposits';
 import { truncatedAddress } from '../../../utilities/utils/truncateAddress';
+import { getTokenUSD } from '../../../utilities/utils/getTokenUSD';
 
 
 interface PrizePoolInfoProps {
@@ -20,6 +21,7 @@ export default function PrizePoolInfo({ vault } : PrizePoolInfoProps) {
 
   const [prizeBalanace, setPrizeBalance] = useState<string>('0.00')
   const [totalAssets, setTotalAssets] = useState<string>(`0.00`)
+  const [tokenRateUSD, setTokenRateUSD] = useState<number | null>(null)
 
   const prevPrizeBalanace = useRef<string | undefined>(undefined); 
   const prevTotalDeposits  = useRef<string | undefined>(undefined); 
@@ -53,6 +55,18 @@ export default function PrizePoolInfo({ vault } : PrizePoolInfoProps) {
     return () => clearTimeout(getTotalAssetsTimeOut);
   },[])
 
+
+  useEffect(()=> {
+    const getTokenRateUSD = async () => {
+      const TokenRateUSD =await getTokenUSD(vault.network, vault.depositAsset)
+      setTokenRateUSD(TokenRateUSD!)
+    }
+    getTokenRateUSD()
+  },[])
+
+  const prizeBalanaceUSD = (tokenRateUSD! * Number(prizeBalanace)).toFixed(2)
+  const totalAssetsUSD = (tokenRateUSD! * Number(totalAssets)).toFixed(2)
+
   return (
     <View style={styles.container}>
         <View><Text style={styles.title}>{vault.prizeName}</Text></View>
@@ -60,7 +74,7 @@ export default function PrizePoolInfo({ vault } : PrizePoolInfoProps) {
         <View style={styles.info}>
           <View style={styles.section}>
             <View style={styles.left}><Text style={styles.caption}>Your Balance</Text></View>
-            <View style={styles.right}><Text>$2</Text><Text style={styles.details}>{prizeBalanace} {vault.depositSymbol}</Text></View>
+            <View style={styles.right}><Text>${prizeBalanaceUSD}</Text><Text style={styles.details}>{prizeBalanace} {vault.depositSymbol}</Text></View>
           </View>
           <View style={styles.section}>
             <View style={styles.left}><Text style={styles.caption}>Your Win Chance</Text></View>
@@ -72,7 +86,7 @@ export default function PrizePoolInfo({ vault } : PrizePoolInfoProps) {
           </View>
           <View style={styles.section}>
             <View style={styles.left}><Text style={styles.caption}>TVL</Text></View>
-            <View style={styles.right}><Text>{vault.depositSymbol} {totalAssets}</Text></View>
+            <View style={styles.right}><Text>${totalAssetsUSD}</Text><Text style={styles.details}>{vault.depositSymbol} {totalAssets}</Text></View>
           </View>
           <View style={styles.section}>
             <View style={styles.left}><Text style={styles.caption}>7D Prize Pool Contribution</Text></View>

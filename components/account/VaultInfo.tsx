@@ -10,44 +10,13 @@ import { getTokenUSD } from '../../utilities/utils/getTokenUSD';
 
 interface VaultInfoProps {
   vault: VaultProps,
+  prizeBalanace: string | null,
+  prizeBalanaceUSD: string | null,
 }
 
-export default function VaultInfo({ vault } : VaultInfoProps) {
+export default function VaultInfo({ vault, prizeBalanace, prizeBalanaceUSD } : VaultInfoProps) {
 
   // display vault with deposit button
-  // calculate price power and balance : pref from utils fuction
-  const [prizeBalanace, setPrizeBalance] = useState<string>('0.00')
-  const [tokenRateUSD, setTokenRateUSD] = useState<number | null>(null)
-  //const [totalAssets, setTotalAssets] = useState<string>(`0.00`)
-
-  const prevPrizeBalanace = useRef<string | undefined>(undefined); 
-  //const prevTotalDeposits  = useRef<string | undefined>(undefined); 
-
-  useEffect(()=>{
-    let getBalanceTimeOut : NodeJS.Timeout
-    const getBalance_ = async () => {
-      
-      const PrizeBalance = await getBalance(vault.prizeAsset, vault.decimals)
-      if (PrizeBalance !== prevPrizeBalanace.current) {
-        setPrizeBalance((PrizeBalance!))
-        prevPrizeBalanace!.current = PrizeBalance; // Update the reference variable
-      }
-      getBalanceTimeOut = setTimeout(getBalance_, 6000);
-    }
-    getBalance_()
-    return () => clearTimeout(getBalanceTimeOut);
-  },[])
-
-  useEffect(()=> {
-    const getTokenRateUSD = async () => {
-      const TokenRateUSD =await getTokenUSD(vault.network, vault.depositAsset)
-      setTokenRateUSD(TokenRateUSD!)
-    }
-    getTokenRateUSD()
-  },[])
-
-  const prizeBalanaceUSD = (tokenRateUSD! * Number(prizeBalanace)).toFixed(2)
-
   return (
     <>
     {

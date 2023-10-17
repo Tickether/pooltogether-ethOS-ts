@@ -13,7 +13,7 @@ export default function PoolDeposits({ totalSavings } : PoolDepositsProps) {
   return (
     <View style={styles.container}>
         <Text style={styles.title}>Your Deposits</Text>
-        <Text style={styles.amount}>${totalSavings}</Text>
+        <Text style={styles.amount}>${totalSavings ? totalSavings : '0.00'}</Text>
     </View>
   );
 }

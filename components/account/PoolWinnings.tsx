@@ -10,7 +10,7 @@ export default function PoolWinnings() {
   return (
     <View style={styles.container}>
         <Text style={styles.title}>Your Winnings</Text>
-        <Text style={styles.amount}>${'0.000000'}</Text>
+        <Text style={styles.amount}>${'0.00'}</Text>
     </View>
   );
 }

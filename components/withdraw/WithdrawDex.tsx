@@ -70,7 +70,7 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanc
                   value={amount! ? amount : ''}
                   onChangeText={setAmount}
                 />
-                <Text style={styles.bottomText}>${amount! ? amountUSD : '0.000000'}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                <Text style={styles.bottomText}>${amount! ? amountUSD : '0.00'}{/**pass number of tokens thru cypro price coversion*/}</Text>
                 {
                   balanceMessage! && (
                     <Text style={styles.error}>{balanceMessage}</Text>
@@ -108,7 +108,7 @@ export default function WithdrawDex({ vault, amount, setAmount, reviewed, balanc
                   value={amount! ? amount : ''}
                   onChangeText={setAmount}
                 />
-                <Text style={styles.bottomText}>${amount! ? amountUSD : '0.000000'}{/**pass number of tokens thru cypro price coversion*/}</Text>
+                <Text style={styles.bottomText}>${amount! ? amountUSD : '0.00'}{/**pass number of tokens thru cypro price coversion*/}</Text>
               </View>
               <View style={styles.balance}>
                 <Text style={styles.topText}>{vault.depositSymbol}</Text>
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     gap: 5,
     flexDirection: 'column',
     justifyContent: 'center',
-    flex: 5
+    flex: 1
   },
   input: {
     fontSize: 23,
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-end',
-    flex: 3
+    flex: 1
   },
   maxBalance:{
     flexDirection: 'row',

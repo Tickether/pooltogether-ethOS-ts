@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView, Dimensions } from 'react-native';
 
 import LearnInfo from '../../components/account/LearnInfo';
 import PoolDeposits from '../../components/account/PoolDeposits';
@@ -9,12 +9,14 @@ import PoolWeeklyOdds from '../../components/account/PoolWeeklyOdds';
 import { useEffect, useState, useRef } from 'react';
 import { getBalance } from '../../utilities/utils/getBalance';
 import { getTokenUSD } from '../../utilities/utils/getTokenUSD';
+import Carousel from 'react-native-reanimated-carousel';
 
 
 export default function AccountScreen() {
 
   // calculate price power and balance : pref from utils fuction
   const vaultsArray = Object.values(defaultVaults);
+  const width = Dimensions.get('window').width;
 
   const [totalSavings, setTotalSaving] = useState<string | null>(null)
 
@@ -98,11 +100,21 @@ export default function AccountScreen() {
       {/**Total Savings */}
       <PoolDeposits totalSavings={totalSavings!}/>
       {/**Map Vault INfo */}
-      { prizeBalanaces !== null && prizeBalanacesUSD !== null &&
-        (
-          vaultsArray.map((vault, i)=> {
-            return <VaultInfo key={vault.depositAsset} vault={vault} prizeBalanace={prizeBalanaces![i]} prizeBalanaceUSD={prizeBalanacesUSD![i]}/>
-          })
+      {
+        prizeBalanaces !== null && prizeBalanacesUSD !== null && (
+        <>
+          <Carousel
+            loop
+            width={width}
+            height={width / 2}
+            data={vaultsArray}
+            scrollAnimationDuration={1000}
+            onSnapToItem={(index) => console.log('current index:', index)}
+            renderItem={({ index }) => (
+                <VaultInfo key={vaultsArray[index].depositAsset} vault={vaultsArray[index]} prizeBalanace={prizeBalanaces![index]} prizeBalanaceUSD={prizeBalanacesUSD![index]}/>
+            )}
+          />
+        </>
         )
       }
       <PoolWeeklyOdds/>

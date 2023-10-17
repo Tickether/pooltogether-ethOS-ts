@@ -15,7 +15,9 @@ module.exports = function (api) {
         "safe": false,
         "allowUndefined": true,
         "verbose": false
-      }]
+      }],
+      // Required for react-native-reanimated
+      'react-native-reanimated/plugin',
     ],
   };
 };

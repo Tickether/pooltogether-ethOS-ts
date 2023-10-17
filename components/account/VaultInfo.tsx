@@ -20,7 +20,7 @@ export default function VaultInfo({ vault, prizeBalanace, prizeBalanaceUSD } : V
   return (
     <>
     {
-      prizeBalanace != '0.00' && prizeBalanace != null && (
+      prizeBalanace != '0.000000' && prizeBalanace != null && (
         <View style={styles.container}>
       
           <View style={styles.top}>

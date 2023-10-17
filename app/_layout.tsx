@@ -49,10 +49,10 @@ function RootLayoutNav() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false}} />
-        <Stack.Screen name="settings" options={{ presentation: 'modal', headerTitle:''}} />
-        <Stack.Screen name="deposit" options={{ presentation: 'modal', headerTitle:''}} />
-        <Stack.Screen name="withdraw" options={{ presentation: 'modal', headerTitle:''}} />
-        <Stack.Screen name="vault" options={{ presentation: 'modal', headerTitle:''}} />
+        <Stack.Screen name="settings" options={{ presentation: 'modal', headerStyle: {backgroundColor: '#21064E'}, headerTitle:''}} />
+        <Stack.Screen name="deposit" options={{ presentation: 'modal', headerStyle: {backgroundColor: '#4C249F'}, headerTitle:''}} />
+        <Stack.Screen name="withdraw" options={{ presentation: 'modal', headerStyle: {backgroundColor: '#4C249F'}, headerTitle:''}} />
+        <Stack.Screen name="vault" options={{ presentation: 'modal', headerStyle: {backgroundColor: '#21064E'}, headerTitle:''}} />
       </Stack>
     </ThemeProvider>
   );

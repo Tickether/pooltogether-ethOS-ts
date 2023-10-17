@@ -35,7 +35,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Prizes',
-          headerTitle:'',
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="trophy" color={color} />,
         }}
       />
@@ -43,7 +43,7 @@ export default function TabLayout() {
         name="vaults"
         options={{
           title: 'Vaults',
-          headerTitle:'',
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="bank" color={color} />,
         }}
       />
@@ -51,7 +51,10 @@ export default function TabLayout() {
         name="account"
         options={{
           title: 'Account',
-          headerTitle:'',
+          headerTitle: '',
+          headerStyle: {
+            backgroundColor: '#21064E', 
+          },
           tabBarIcon: ({ color }) => <FontAwesome5 name="piggy-bank" size={28} color={color} />,
           headerRight: () => (
             <Link href="/settings" asChild>

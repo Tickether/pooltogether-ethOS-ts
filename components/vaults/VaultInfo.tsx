@@ -17,7 +17,7 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
 
   // display vault with deposit button
   // calculate price power and balance : pref from utils fuction
-  const [prizeBalanace, setPrizeBalance] = useState<string>('0.00')
+  const [prizeBalanace, setPrizeBalance] = useState<string>('0.000000')
   const [totalAssets, setTotalAssets] = useState<string>(`0.00`)
   const [tokenRateUSD, setTokenRateUSD] = useState<number | null>(null)
 
@@ -78,7 +78,7 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
 
       <View style={styles.mid}>
         {
-          prizeBalanace != '0.00' && (
+          prizeBalanace != '0.000000' && (
             <View style={styles.balance}>
               
               <Text style={styles.title}>Your Balance</Text>
@@ -117,7 +117,7 @@ export default function VaultInfo({ vault } : VaultInfoProps) {
 
       <View style={styles.down}>
         {
-          prizeBalanace == '0.00' 
+          prizeBalanace == '0.000000' 
           ?(
             <View style={styles.action}>
               <TouchableOpacity style={styles.actionDeposit}>

@@ -16,7 +16,7 @@ export const getBalance = async (contract: string, decimals: number) =>{
 
         const balance = Number(formatUnits(BigInt(String(balanceOf)), decimals))
 
-        return balance.toFixed(2)
+        return balance.toFixed(6)
     } catch (error) {
         console.log(error)   
     }

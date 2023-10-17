@@ -10,7 +10,7 @@ export const getTotalDeposits = async (contract: string, decimals: number) => {
             functionName: 'totalAssets',
         })
         const totalDeposits = Number(formatUnits(BigInt(String(totalAssets)), decimals))
-        return totalDeposits.toFixed(2)
+        return totalDeposits.toFixed(6)
     } catch (error) {
         console.log(error)   
     }

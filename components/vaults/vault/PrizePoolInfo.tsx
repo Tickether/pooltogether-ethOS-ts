@@ -19,7 +19,7 @@ interface PrizePoolInfoProps {
 
 export default function PrizePoolInfo({ vault } : PrizePoolInfoProps) {
 
-  const [prizeBalanace, setPrizeBalance] = useState<string>('0.00')
+  const [prizeBalanace, setPrizeBalance] = useState<string>('0.000000')
   const [totalAssets, setTotalAssets] = useState<string>(`0.00`)
   const [tokenRateUSD, setTokenRateUSD] = useState<number | null>(null)
 

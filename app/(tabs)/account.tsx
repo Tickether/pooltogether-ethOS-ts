@@ -4,12 +4,13 @@ import LearnInfo from '../../components/account/LearnInfo';
 import PoolDeposits from '../../components/account/PoolDeposits';
 import PoolWinnings from '../../components/account/PoolWinnings';
 import VaultInfo from '../../components/account/VaultInfo';
-import { defaultVaults } from '../../constants/Vaults';
+import { VaultProps, defaultVaults } from '../../constants/Vaults';
 import PoolWeeklyOdds from '../../components/account/PoolWeeklyOdds';
 import { useEffect, useState, useRef } from 'react';
 import { getBalance } from '../../utilities/utils/getBalance';
 import { getTokenUSD } from '../../utilities/utils/getTokenUSD';
 import Carousel from 'react-native-reanimated-carousel';
+import { Text } from '../../components/Themed';
 
 
 export default function AccountScreen() {
@@ -23,6 +24,9 @@ export default function AccountScreen() {
   const [prizeBalanaces, setPrizeBalances] = useState<string[] | null>(null)
   const [prizeBalanacesUSD, setPrizeBalanacesUSD] = useState<string[] | null>(null)
   const [tokenRatesUSD, setTokenRatesUSD] = useState<number[] | null>(null)
+
+  const [activePrizeBalanaces, setActivePrizeBalanaces] = useState<string[] | null>(null)
+  const [activeVaults, setActiveVaults] = useState<VaultProps[] | null>(null)
   
   const prevPrizeBalanaces = useRef<string[] | undefined>(undefined); 
   const prevTokenRatesUSD = useRef<number[] | undefined>(undefined); 
@@ -41,43 +45,70 @@ export default function AccountScreen() {
         setPrizeBalances(PrizeBalances)
         PrevPrizeBalanaces = PrizeBalances
       }
-      getBalancesTimeOut = setTimeout(getBalances, 6000);
+      getBalancesTimeOut = setTimeout(getBalances, 3000);
     }
     getBalances()
     return () => clearTimeout(getBalancesTimeOut);
   },[])
   //console.log(prizeBalanaces?.length)
   
-
+  useEffect(()=>{
+    let getCheckNotEmpty : NodeJS.Timeout
+    const checkNotEmpty = async () => {
+      if (prizeBalanaces!) {
+        let vaults: VaultProps[] = []
+        let balances: string[] = []
+        for (let i = 0; i < vaultsArray.length; i++) {
+          const vault = vaultsArray![i]
+          const balance = prizeBalanaces![i]
+          if (balance == '0.000000') {
+            let newVaults = vaultsArray!.filter(item => item !== vault)
+            let newBalances = prizeBalanaces!.filter(item => item !== balance)
+            console.log(newVaults, newBalances)
+            vaults = newVaults
+            balances = newBalances
+          }
+          
+        }
+        setActiveVaults(vaults)
+        setActivePrizeBalanaces(balances)
+      }
+      getCheckNotEmpty = setTimeout(checkNotEmpty, 3000);
+    }
+    checkNotEmpty()
+    return () => clearTimeout(getCheckNotEmpty);
+  },[prizeBalanaces])
   
   useEffect(()=> {
     let getTokenRatesUSDTimeOut : NodeJS.Timeout
     const getTokenRatesUSD = async () => {
-      const TokenRatesUSD: number[] = [];
-      for (let i = 0; i < vaultsArray.length; i++) {
-        const vault = vaultsArray![i];
-        const TokenRateUSD =await getTokenUSD(vault.network, vault.depositAsset)
-        TokenRatesUSD.push(TokenRateUSD!)
+      if (activeVaults !== null) {
+        const TokenRatesUSD: number[] = [];
+        for (let i = 0; i < activeVaults!.length; i++) {
+          const vault = activeVaults![i];
+          const TokenRateUSD =await getTokenUSD(vault.network, vault.depositAsset)
+          TokenRatesUSD.push(TokenRateUSD!)
+        }
+        let PrevTokenRatesUSD = prevTokenRatesUSD!.current
+        if (TokenRatesUSD !== PrevTokenRatesUSD ) {
+          setTokenRatesUSD(TokenRatesUSD!)
+          PrevTokenRatesUSD = TokenRatesUSD
+        }
       }
-      let PrevTokenRatesUSD = prevTokenRatesUSD!.current
-      if (TokenRatesUSD !== PrevTokenRatesUSD ) {
-        setTokenRatesUSD(TokenRatesUSD!)
-        PrevTokenRatesUSD = TokenRatesUSD
-      }
-      getTokenRatesUSDTimeOut = setTimeout(getTokenRatesUSD, 60000);
+      getTokenRatesUSDTimeOut = setTimeout(getTokenRatesUSD, 30000);
     }
     getTokenRatesUSD()
     return () => clearTimeout(getTokenRatesUSDTimeOut);
-  },[])
+  },[activeVaults])
+  console.log(tokenRatesUSD)
 
   
   useEffect(()=>{
-    const getTokenRatesUSD = () => {
-      const PrizeBalanacesUSD: string[] = []; 
-      if (prizeBalanaces !== null && tokenRatesUSD !== null) {
-        for (let i = 0; i < prizeBalanaces.length; i++) {
-          const PrizeBalanace = prizeBalanaces[i]
-          const TokenRateUSD = tokenRatesUSD[i]
+    const PrizeBalanacesUSD: string[] = []; 
+      if (activePrizeBalanaces !== null && tokenRatesUSD !== null) {
+        for (let i = 0; i < activePrizeBalanaces.length; i++) {
+          const PrizeBalanace = activePrizeBalanaces![i]
+          const TokenRateUSD = tokenRatesUSD![i]
           const prizeBalanaceUSD = (TokenRateUSD! * Number(PrizeBalanace)).toFixed(2)
           PrizeBalanacesUSD.push(prizeBalanaceUSD)
         }
@@ -86,10 +117,12 @@ export default function AccountScreen() {
 
         setTotalSaving((total))
       }
-    }
-    getTokenRatesUSD()
-  },[prizeBalanaces, tokenRatesUSD])
-  console.log(prizeBalanacesUSD)
+  },[activePrizeBalanaces, tokenRatesUSD])
+  //console.log(prizeBalanacesUSD)
+  console.log('prize:', prizeBalanaces)
+  console.log('activePrize:', activePrizeBalanaces)
+  console.log('activePrizeUSD:', prizeBalanacesUSD)
+  console.log('total:', totalSavings)
   
 
   
@@ -101,20 +134,22 @@ export default function AccountScreen() {
       <PoolDeposits totalSavings={totalSavings!}/>
       {/**Map Vault INfo */}
       {
-        prizeBalanaces !== null && prizeBalanacesUSD !== null && (
-        <>
+        activeVaults !== null && activePrizeBalanaces !== null && prizeBalanacesUSD !== null
+        ?(
           <Carousel
-            loop
+            loop={false}
             width={width}
             height={width / 2}
-            data={vaultsArray}
+            data={activeVaults!}
             scrollAnimationDuration={1000}
             onSnapToItem={(index) => console.log('current index:', index)}
             renderItem={({ index }) => (
-                <VaultInfo key={vaultsArray[index].depositAsset} vault={vaultsArray[index]} prizeBalanace={prizeBalanaces![index]} prizeBalanaceUSD={prizeBalanacesUSD![index]}/>
+                <VaultInfo key={activeVaults![index].depositAsset} vault={activeVaults![index]} prizeBalanace={activePrizeBalanaces![index]} prizeBalanaceUSD={prizeBalanacesUSD![index]}/>
             )}
           />
-        </>
+        )
+        :(
+          <><Text>No Balance</Text></>
         )
       }
       <PoolWeeklyOdds/>

@@ -10,7 +10,7 @@ export default function LearnInfo() {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.version}>BETA</Text>
+        <Text style={styles.version}>SAVE & WIN!</Text>
       </View>
       <View>
         <Text style={styles.title}>Learn more on the gov forum</Text>
